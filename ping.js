@@ -1,19 +1,18 @@
 /**
- * Render Web Service Keep-Alive Ping Script (GitHub Actions 6-Hour Session)
- * ------------------------------------------------------------------------
+ * Render Web Service Keep-Alive Ping Script (Instant Live Log Edition)
+ * -------------------------------------------------------------------
  * This script runs inside a GitHub Actions runner for ~5.8 hours (350 minutes),
  * sending an HTTP GET ping request to `https://nasiobot.onrender.com/`
  * EXACTLY EVERY 5 MINUTES continuously.
  *
- * Why 5.8 Hours?
- * GitHub Actions allows jobs to run up to 6 hours for free. By keeping each
- * GitHub Actions job active for 5.8 hours, GitHub stays actively pinging
- * your Render service every 5 minutes non-stop!
+ * After EVERY 5-minute ping, it automatically commits and pushes `pings.json`
+ * to GitHub so your live website dashboard updates instantly every 5 minutes!
  */
 
 import { setTimeout } from 'node:timers/promises';
 import fs from 'node:fs';
 import path from 'node:path';
+import { execSync } from 'node:child_process';
 
 // Configuration
 const TARGET_URL = 'https://nasiobot.onrender.com/';
@@ -38,7 +37,7 @@ function getFormattedTimestamp() {
 }
 
 /**
- * Record a ping result to `pings.json` database file for index.html UI dashboard.
+ * Record a ping result to `pings.json` database file and push to GitHub live dashboard.
  * @param {object} pingRecord 
  */
 function recordPingToHistory(pingRecord) {
@@ -64,6 +63,20 @@ function recordPingToHistory(pingRecord) {
   try {
     fs.writeFileSync(pingsFilePath, JSON.stringify(history, null, 2), 'utf8');
     console.log(`[History] Logged ping #${history.length} to pings.json`);
+
+    // Instant Git Push on every 5-min ping so live website updates every 5 minutes!
+    if (!IS_SINGLE_SHOT && !IS_LOOP_MODE) {
+      try {
+        execSync('git config --global user.name "github-actions[bot]"');
+        execSync('git config --global user.email "github-actions[bot]@users.noreply.github.com"');
+        execSync('git add pings.json');
+        execSync('git commit -m "Auto-log 5-min ping history [skip ci]" || true');
+        execSync('git push origin main || true');
+        console.log('⚡ [Live Sync] Pushed 5-minute ping to GitHub Pages dashboard!');
+      } catch (gitErr) {
+        // Ignore background git push errors if unauthenticated locally
+      }
+    }
   } catch (err) {
     console.error('[History Warning] Failed to write to pings.json:', err.message);
   }
@@ -176,7 +189,7 @@ async function runPingCycle() {
  */
 async function main() {
   console.log('====================================================');
-  console.log('  RENDER SERVICE KEEP-ALIVE PINGER (GitHub Actions)');
+  console.log('  RENDER SERVICE KEEP-ALIVE PINGER (Instant Live Sync)');
   console.log('====================================================');
   console.log(`Target URL       : ${TARGET_URL}`);
   console.log(`Max Retries      : ${MAX_RETRIES}`);
@@ -234,3 +247,5 @@ main().catch((err) => {
   console.error('\n[Unhandled Exception]', err);
   process.exit(1);
 });
+
+console.log('HELLO WORLD');
