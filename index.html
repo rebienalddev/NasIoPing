@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Render Service Ping History & Status Dashboard</title>
-  <meta name="description" content="Live monitoring dashboard displaying history of HTTP keep-alive ping requests for Render web service." />
+  <title>Render Service Ping History & Status Dashboard (Philippine Time)</title>
+  <meta name="description" content="Live monitoring dashboard displaying history of HTTP keep-alive ping requests for Render web service in Philippine Standard Time (PST)." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -77,6 +77,20 @@
       color: var(--text-muted);
       font-size: 0.9rem;
       margin-top: 0.25rem;
+    }
+
+    .ph-tz-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--warning-amber);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 9999px;
+      margin-left: 0.5rem;
     }
 
     .endpoint-badge {
@@ -317,8 +331,9 @@
       <div class="title-area">
         <h1>
           <span>Render Keep-Alive History</span>
+          <span class="ph-tz-badge">🇵🇭 Philippine Time (PST)</span>
         </h1>
-        <p class="subtitle">Live HTTP request log monitoring forRender web service ping script</p>
+        <p class="subtitle">Live HTTP request log monitoring formatted in Philippine Standard Time (GMT+8)</p>
       </div>
 
       <div class="controls-bar">
@@ -350,7 +365,7 @@
         <div class="stat-meta">Latency across pings</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Last Pinged</div>
+        <div class="stat-label">Last Pinged (PST)</div>
         <div class="stat-value" id="lastPingTime" style="font-size: 1.1rem; padding-top: 0.4rem;">-</div>
         <div class="stat-meta" id="lastPingStatus">Status: Unknown</div>
       </div>
@@ -360,7 +375,7 @@
     <div class="section-card">
       <div class="section-header">
         <div class="section-title">
-          📋 Detailed Request Logs
+          📋 Detailed Request Logs (Manila Time)
         </div>
         <input type="text" id="searchInput" class="search-box" placeholder="Filter logs..." onkeyup="filterLogs()" />
       </div>
@@ -370,7 +385,7 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Timestamp (UTC)</th>
+              <th>Date & Time (Philippine Time - GMT+8)</th>
               <th>HTTP Status</th>
               <th>Response Time</th>
               <th>Result</th>
@@ -386,11 +401,31 @@
     </div>
 
     <footer>
-      <p>Render Keep-Alive Pinger &bull; Automated via GitHub Actions &bull; Node.js 22 Native Fetch</p>
+      <p>Render Keep-Alive Pinger &bull; Philippine Standard Time (PST) &bull; Node.js 22 Native Fetch</p>
     </footer>
   </div>
 
   <script>
+    // Format ISO string to Philippine Standard Time (Asia/Manila)
+    function formatPhilippineTime(isoString) {
+      if (!isoString) return '-';
+      try {
+        const dateObj = new Date(isoString);
+        return dateObj.toLocaleString('en-US', {
+          timeZone: 'Asia/Manila',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true
+        }) + ' (PST)';
+      } catch (err) {
+        return isoString;
+      }
+    }
+
     // Embedded fallback initial data if pings.json fetch fails locally
     const fallbackPings = [
       { id: '1', timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString(), status: 200, statusText: 'OK', responseTimeMs: 312, success: true },
@@ -448,13 +483,12 @@
       uptimeRateEl.textContent = uptime + '%';
       avgResponseTimeEl.textContent = avgLatency + ' ms';
       
-      const latestDate = new Date(latest.timestamp);
-      lastPingTimeEl.textContent = latestDate.toLocaleTimeString();
+      lastPingTimeEl.textContent = formatPhilippineTime(latest.timestamp);
       lastPingStatusEl.textContent = `Status: ${latest.success ? '🟢 Active' : '🔴 Failed'} (${latest.responseTimeMs}ms)`;
 
-      // Render table
+      // Render table in Philippine Time
       tableBody.innerHTML = sortedData.map((item, idx) => {
-        const dateStr = new Date(item.timestamp).toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+        const phDateStr = formatPhilippineTime(item.timestamp);
         const isSuccess = item.success;
         const statusBadge = isSuccess
           ? `<span class="status-pill success">✔ ${item.status || 200} ${item.statusText || 'OK'}</span>`
@@ -463,7 +497,7 @@
         return `
           <tr>
             <td>${total - idx}</td>
-            <td class="timestamp-cell">${dateStr}</td>
+            <td class="timestamp-cell">${phDateStr}</td>
             <td>${statusBadge}</td>
             <td class="response-time">${item.responseTimeMs} ms</td>
             <td><strong>${isSuccess ? 'SUCCESS' : 'FAILED'}</strong></td>
@@ -474,11 +508,13 @@
 
     function filterLogs() {
       const query = document.getElementById('searchInput').value.toLowerCase();
-      const filtered = allPings.filter(p => 
-        p.timestamp.toLowerCase().includes(query) ||
-        (p.status && p.status.toString().includes(query)) ||
-        (p.success ? 'success' : 'failed').includes(query)
-      );
+      const filtered = allPings.filter(p => {
+        const phTime = formatPhilippineTime(p.timestamp).toLowerCase();
+        return phTime.includes(query) ||
+          p.timestamp.toLowerCase().includes(query) ||
+          (p.status && p.status.toString().includes(query)) ||
+          (p.success ? 'success' : 'failed').includes(query);
+      });
       renderDashboard(filtered);
     }
 
