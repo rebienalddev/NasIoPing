@@ -8,6 +8,9 @@ on:
   workflow_dispatch:
     # Allows manual triggering from the GitHub Actions tab
 
+permissions:
+  contents: write
+
 jobs:
   ping:
     name: Ping Render Web Service
@@ -28,3 +31,11 @@ jobs:
 
       - name: Run Ping Script (Active Session)
         run: node ping.js
+
+      - name: Commit and push ping history
+        if: always()
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add pings.json
+          git diff-index --quiet HEAD || (git commit -m "Update ping history log [skip ci]" && git push)

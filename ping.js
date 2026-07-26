@@ -4,11 +4,13 @@
  * This script sends an HTTP GET request to keep a Render web service active.
  * Render free tier web services spin down after 15 minutes of inactivity.
  *
- * This script runs inside a GitHub Actions runner and sends a ping EXACTLY
- * EVERY 5 MINUTES (at 0 min, 5 min, 10 min, 15 min, etc.) continuously.
+ * Runs inside GitHub Actions / local terminal, sending pings every 5 minutes
+ * and recording full ping history to `pings.json` for `index.html`.
  */
 
 import { setTimeout } from 'node:timers/promises';
+import fs from 'node:fs';
+import path from 'node:path';
 
 // Configuration
 const TARGET_URL = 'https://nasiobot.onrender.com/';
@@ -29,6 +31,38 @@ const IS_LOOP_MODE = process.argv.includes('--loop') || process.env.LOOP === 'tr
  */
 function getFormattedTimestamp() {
   return new Date().toISOString();
+}
+
+/**
+ * Record a ping result to `pings.json` database file for index.html UI dashboard.
+ * @param {object} pingRecord 
+ */
+function recordPingToHistory(pingRecord) {
+  const pingsFilePath = path.join(process.cwd(), 'pings.json');
+  let history = [];
+
+  try {
+    if (fs.existsSync(pingsFilePath)) {
+      const rawData = fs.readFileSync(pingsFilePath, 'utf8');
+      history = JSON.parse(rawData);
+    }
+  } catch (err) {
+    history = [];
+  }
+
+  history.push(pingRecord);
+
+  // Maintain up to 500 historical pings
+  if (history.length > 500) {
+    history = history.slice(-500);
+  }
+
+  try {
+    fs.writeFileSync(pingsFilePath, JSON.stringify(history, null, 2), 'utf8');
+    console.log(`[History] Logged ping #${history.length} to pings.json`);
+  } catch (err) {
+    console.error('[History Warning] Failed to write to pings.json:', err.message);
+  }
 }
 
 /**
@@ -59,6 +93,18 @@ async function sendPing(attemptNumber) {
     console.log(`Response Time : ${duration} ms`);
     console.log(`Result        : ${isSuccess ? 'SUCCESS' : 'FAILED (Non-2xx Status)'}`);
 
+    const record = {
+      id: `ping-${Date.now()}`,
+      timestamp,
+      status: response.status,
+      statusText: response.statusText,
+      responseTimeMs: duration,
+      success: isSuccess,
+      targetUrl: TARGET_URL
+    };
+
+    recordPingToHistory(record);
+
     return {
       success: isSuccess,
       status: response.status,
@@ -72,6 +118,19 @@ async function sendPing(attemptNumber) {
     console.log(`HTTP Status   : N/A (Network / Request Error)`);
     console.log(`Response Time : ${duration} ms`);
     console.log(`Result        : FAILED (${error.message})`);
+
+    const record = {
+      id: `ping-${Date.now()}`,
+      timestamp,
+      status: null,
+      statusText: 'ERR',
+      responseTimeMs: duration,
+      success: false,
+      targetUrl: TARGET_URL,
+      error: error.message
+    };
+
+    recordPingToHistory(record);
 
     return {
       success: false,
@@ -171,3 +230,5 @@ main().catch((err) => {
   console.error('\n[Unhandled Exception]', err);
   process.exit(1);
 });
+
+console.log('HELLO WORLD');
