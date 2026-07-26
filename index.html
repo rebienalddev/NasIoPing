@@ -93,6 +93,29 @@
       color: var(--text-gray);
     }
 
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-help {
+      background: var(--bg-black);
+      border: 1px solid var(--border-gray);
+      color: var(--text-white);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.3rem 0.65rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-help:hover {
+      background: var(--text-white);
+      color: var(--bg-black);
+    }
+
     .server-status-pill {
       font-size: 0.75rem;
       font-weight: 700;
@@ -219,7 +242,7 @@
 
     /* Scrollable Container (Fixed Height) */
     .scroll-table-box {
-      max-height: 420px; /* Fixed scrollable container height */
+      max-height: 420px;
       overflow-y: auto;
       scrollbar-width: thin;
       scrollbar-color: var(--border-bright) var(--bg-black);
@@ -307,6 +330,107 @@
       font-size: 0.85rem;
     }
 
+    /* About Terminal Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--panel-black);
+      border: 1px solid var(--text-white);
+      max-width: 580px;
+      width: 100%;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-head {
+      background: var(--text-white);
+      color: var(--bg-black);
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      color: var(--bg-black);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      font-size: 0.825rem;
+      line-height: 1.6;
+    }
+
+    .modal-intro {
+      color: var(--text-white);
+      margin-bottom: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px dashed var(--border-bright);
+    }
+
+    .info-points {
+      list-style: none;
+    }
+
+    .info-points li {
+      margin-bottom: 0.75rem;
+      color: var(--text-gray);
+      position: relative;
+      padding-left: 1.25rem;
+    }
+
+    .info-points li::before {
+      content: '>';
+      position: absolute;
+      left: 0;
+      color: var(--text-white);
+      font-weight: 800;
+    }
+
+    .info-points strong {
+      color: var(--text-white);
+    }
+
+    .tech-stack-row {
+      margin-top: 1.25rem;
+      padding-top: 0.85rem;
+      border-top: 1px dashed var(--border-bright);
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-gray);
+    }
+
+    .tech-badge {
+      border: 1px solid var(--border-bright);
+      padding: 0.15rem 0.5rem;
+      color: var(--text-white);
+      font-size: 0.7rem;
+    }
+
     footer {
       margin-top: 2rem;
       text-align: center;
@@ -333,9 +457,12 @@
         </div>
       </div>
 
-      <div class="server-status-pill">
-        <span class="status-blink"></span>
-        <span>[ONLINE]</span>
+      <div class="header-actions">
+        <button class="btn-help" onclick="toggleModal(true)" title="About Nas IO Bot">[ ? ]</button>
+        <div class="server-status-pill">
+          <span class="status-blink"></span>
+          <span>[ONLINE]</span>
+        </div>
       </div>
     </div>
 
@@ -401,7 +528,54 @@
     </footer>
   </div>
 
+  <!-- Terminal Info Modal -->
+  <div class="modal-backdrop" id="infoModal" onclick="if(event.target===this) toggleModal(false)">
+    <div class="modal-card">
+      <div class="modal-head">
+        <span>&gt;_ ABOUT NAS IO BOT [SYSTEM_INFO]</span>
+        <button class="btn-close-modal" onclick="toggleModal(false)">[ X ]</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-intro">
+          <strong>Nas IO Bot</strong> is an automated Discord membership verification and subscription enforcement bot integrated directly with website authentication systems.
+        </p>
+
+        <ul class="info-points">
+          <li>
+            <strong>Gmail Verification:</strong> Requires users to register their Gmail address on the website before gaining entry to the Discord server.
+          </li>
+          <li>
+            <strong>Database Persistence:</strong> Securely stores user profiles, Discord IDs, and registration metadata in a <strong>MongoDB Cloud Database</strong>.
+          </li>
+          <li>
+            <strong>Subscription Monitoring:</strong> Continuously checks website subscription statuses against active Discord members.
+          </li>
+          <li>
+            <strong>Automated Membership Enforcement:</strong> Automatically kicks members from the Discord server if they are unsubscribed or if their active subscription expires.
+          </li>
+        </ul>
+
+        <div class="tech-stack-row">
+          <span>TECH STACK:</span>
+          <span class="tech-badge">Node.js</span>
+          <span class="tech-badge">MongoDB</span>
+          <span class="tech-badge">Discord.js</span>
+          <span class="tech-badge">Render API</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
+    function toggleModal(show) {
+      const modal = document.getElementById('infoModal');
+      if (show) {
+        modal.classList.add('active');
+      } else {
+        modal.classList.remove('active');
+      }
+    }
+
     // Format ISO timestamp into Philippine Standard Time (Asia/Manila)
     function formatPhilippineTime(isoString) {
       if (!isoString) return '-';
