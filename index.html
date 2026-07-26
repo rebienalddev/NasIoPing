@@ -330,16 +330,16 @@
       font-size: 0.85rem;
     }
 
-    /* About Terminal Modal */
+    /* Compact 2-Column Terminal Info Modal */
     .modal-backdrop {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.88);
       z-index: 1000;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 1.25rem;
       backdrop-filter: blur(4px);
     }
 
@@ -350,20 +350,20 @@
     .modal-card {
       background: var(--panel-black);
       border: 1px solid var(--text-white);
-      max-width: 580px;
+      max-width: 650px;
       width: 100%;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.12);
     }
 
     .modal-head {
       background: var(--text-white);
       color: var(--bg-black);
-      padding: 0.75rem 1.25rem;
+      padding: 0.6rem 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-weight: 800;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       letter-spacing: 0.05em;
     }
 
@@ -374,34 +374,56 @@
       font-family: 'JetBrains Mono', monospace;
       font-weight: 800;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
-    .modal-body {
-      padding: 1.5rem;
-      font-size: 0.825rem;
-      line-height: 1.6;
+    .modal-grid-container {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1rem;
+      padding: 1.25rem;
+      font-size: 0.775rem;
     }
 
-    .modal-intro {
+    @media (max-width: 600px) {
+      .modal-grid-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .modal-left {
+      border-right: 1px dashed var(--border-gray);
+      padding-right: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .modal-left {
+        border-right: none;
+        border-bottom: 1px dashed var(--border-gray);
+        padding-right: 0;
+        padding-bottom: 1rem;
+      }
+    }
+
+    .modal-intro-text {
       color: var(--text-white);
-      margin-bottom: 1rem;
-      padding-bottom: 0.85rem;
-      border-bottom: 1px dashed var(--border-bright);
+      margin-bottom: 0.85rem;
+      line-height: 1.5;
     }
 
-    .info-points {
+    .info-list-items {
       list-style: none;
     }
 
-    .info-points li {
-      margin-bottom: 0.75rem;
+    .info-list-items li {
+      margin-bottom: 0.6rem;
       color: var(--text-gray);
       position: relative;
-      padding-left: 1.25rem;
+      padding-left: 1rem;
+      line-height: 1.45;
     }
 
-    .info-points li::before {
+    .info-list-items li::before {
       content: '>';
       position: absolute;
       left: 0;
@@ -409,26 +431,62 @@
       font-weight: 800;
     }
 
-    .info-points strong {
+    .info-list-items strong {
       color: var(--text-white);
     }
 
-    .tech-stack-row {
-      margin-top: 1.25rem;
-      padding-top: 0.85rem;
-      border-top: 1px dashed var(--border-bright);
+    .modal-right {
       display: flex;
-      gap: 0.5rem;
-      align-items: center;
-      font-size: 0.75rem;
-      color: var(--text-gray);
+      flex-direction: column;
+      gap: 0.75rem;
     }
 
-    .tech-badge {
-      border: 1px solid var(--border-bright);
-      padding: 0.15rem 0.5rem;
-      color: var(--text-white);
+    .sys-spec-box {
+      background: #121212;
+      border: 1px solid var(--border-gray);
+      padding: 0.85rem;
+    }
+
+    .spec-header {
       font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-gray);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-gray);
+      padding-bottom: 0.35rem;
+    }
+
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+      font-size: 0.725rem;
+    }
+
+    .spec-label {
+      color: var(--text-dark);
+    }
+
+    .spec-value {
+      color: var(--text-white);
+      font-weight: 600;
+    }
+
+    .tech-stack-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.25rem;
+    }
+
+    .badge-pill {
+      border: 1px solid var(--border-bright);
+      background: var(--bg-black);
+      color: var(--text-white);
+      font-size: 0.685rem;
+      padding: 0.15rem 0.45rem;
+      font-weight: 600;
     }
 
     footer {
@@ -528,39 +586,68 @@
     </footer>
   </div>
 
-  <!-- Terminal Info Modal -->
+  <!-- Compact 2-Column Terminal Info Modal -->
   <div class="modal-backdrop" id="infoModal" onclick="if(event.target===this) toggleModal(false)">
     <div class="modal-card">
       <div class="modal-head">
-        <span>&gt;_ ABOUT NAS IO BOT [SYSTEM_INFO]</span>
+        <span>&gt;_ ABOUT NAS IO BOT [SYSTEM_SPEC]</span>
         <button class="btn-close-modal" onclick="toggleModal(false)">[ X ]</button>
       </div>
-      <div class="modal-body">
-        <p class="modal-intro">
-          <strong>Nas IO Bot</strong> is an automated Discord membership verification and subscription enforcement bot integrated directly with website authentication systems.
-        </p>
+      <div class="modal-grid-container">
+        <!-- Description on the Left -->
+        <div class="modal-left">
+          <p class="modal-intro-text">
+            <strong>Nas IO Bot</strong> is an automated Discord membership verification and subscription enforcement bot integrated with website accounts.
+          </p>
 
-        <ul class="info-points">
-          <li>
-            <strong>Gmail Verification:</strong> Requires users to register their Gmail address on the website before gaining entry to the Discord server.
-          </li>
-          <li>
-            <strong>Database Persistence:</strong> Securely stores user profiles, Discord IDs, and registration metadata in a <strong>MongoDB Cloud Database</strong>.
-          </li>
-          <li>
-            <strong>Subscription Monitoring:</strong> Continuously checks website subscription statuses against active Discord members.
-          </li>
-          <li>
-            <strong>Automated Membership Enforcement:</strong> Automatically kicks members from the Discord server if they are unsubscribed or if their active subscription expires.
-          </li>
-        </ul>
+          <ul class="info-list-items">
+            <li>
+              <strong>Gmail Registration:</strong> Requires users to register their Gmail address on the website before joining the Discord server.
+            </li>
+            <li>
+              <strong>MongoDB Database:</strong> Saves user profiles and Discord registration states securely to a <strong>MongoDB Cloud Database</strong>.
+            </li>
+            <li>
+              <strong>Subscription Audit:</strong> Checks website subscription status against active Discord members.
+            </li>
+            <li>
+              <strong>Auto-Kick Enforcement:</strong> Automatically kicks members if they are not subscribed or if their subscription expires.
+            </li>
+          </ul>
+        </div>
 
-        <div class="tech-stack-row">
-          <span>TECH STACK:</span>
-          <span class="tech-badge">Node.js</span>
-          <span class="tech-badge">MongoDB</span>
-          <span class="tech-badge">Discord.js</span>
-          <span class="tech-badge">Render API</span>
+        <!-- System Details & Tech Stack on the Right -->
+        <div class="modal-right">
+          <div class="sys-spec-box">
+            <div class="spec-header">[SYSTEM_METADATA]</div>
+            <div class="spec-item">
+              <span class="spec-label">RUNTIME:</span>
+              <span class="spec-value">Node.js 22</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">DATABASE:</span>
+              <span class="spec-value">MongoDB Cloud</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">PLATFORM:</span>
+              <span class="spec-value">Discord API</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">HOST:</span>
+              <span class="spec-value">Render Cloud</span>
+            </div>
+          </div>
+
+          <div class="sys-spec-box">
+            <div class="spec-header">[TECH_STACK]</div>
+            <div class="tech-stack-badges">
+              <span class="badge-pill">Node.js</span>
+              <span class="badge-pill">MongoDB</span>
+              <span class="badge-pill">Discord.js</span>
+              <span class="badge-pill">Express</span>
+              <span class="badge-pill">Render</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
