@@ -1,11 +1,14 @@
 /**
- * Render Web Service Keep-Alive Ping Script
- * -----------------------------------------
- * This script sends an HTTP GET request to keep a Render web service active.
- * Render free tier web services spin down after 15 minutes of inactivity.
+ * Render Web Service Keep-Alive Ping Script (GitHub Actions 6-Hour Session)
+ * ------------------------------------------------------------------------
+ * This script runs inside a GitHub Actions runner for ~5.8 hours (350 minutes),
+ * sending an HTTP GET ping request to `https://nasiobot.onrender.com/`
+ * EXACTLY EVERY 5 MINUTES continuously.
  *
- * Runs inside GitHub Actions / local terminal, sending pings every 5 minutes
- * and recording full ping history to `pings.json` for `index.html`.
+ * Why 5.8 Hours?
+ * GitHub Actions allows jobs to run up to 6 hours for free. By keeping each
+ * GitHub Actions job active for 5.8 hours, GitHub stays actively pinging
+ * your Render service every 5 minutes non-stop!
  */
 
 import { setTimeout } from 'node:timers/promises';
@@ -19,7 +22,8 @@ const RETRY_DELAY_MS = 10000; // 10 seconds delay between retries
 
 // Ping Interval: EXACTLY EVERY 5 MINUTES
 const PING_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
-const TOTAL_SESSION_DURATION_MS = 15 * 60 * 1000; // 15 minutes per GitHub job session
+// GitHub Actions maximum session duration: 350 minutes (~5.8 hours)
+const TOTAL_SESSION_DURATION_MS = 350 * 60 * 1000;
 
 // Flags
 const IS_SINGLE_SHOT = process.argv.includes('--single') || process.env.SINGLE === 'true';
@@ -52,9 +56,9 @@ function recordPingToHistory(pingRecord) {
 
   history.push(pingRecord);
 
-  // Maintain up to 500 historical pings
-  if (history.length > 500) {
-    history = history.slice(-500);
+  // Maintain up to 1000 historical pings
+  if (history.length > 1000) {
+    history = history.slice(-1000);
   }
 
   try {
@@ -177,14 +181,13 @@ async function main() {
   console.log(`Target URL       : ${TARGET_URL}`);
   console.log(`Max Retries      : ${MAX_RETRIES}`);
   console.log(`Ping Interval    : EVERY 5 MINUTES`);
+  console.log(`Session Window   : 5.8 HOURS (350 MINUTES)`);
   console.log('====================================================');
 
   if (IS_SINGLE_SHOT) {
-    // Single run mode
     const success = await runPingCycle();
     process.exit(success ? 0 : 1);
   } else if (IS_LOOP_MODE) {
-    // Infinite local loop mode
     console.log('[Info] Running continuously locally. Press Ctrl+C to stop.\n');
     await runPingCycle();
     while (true) {
@@ -193,14 +196,15 @@ async function main() {
       await runPingCycle();
     }
   } else {
-    // GitHub Actions Session: Pings EVERY 5 MINUTES repeatedly (0 min, 5 min, 10 min, 15 min)
+    // GitHub Actions Long Session Mode: Runs for 5.8 hours, pinging EVERY 5 MINUTES
     const sessionStartTime = Date.now();
     let cycleCount = 0;
     let anyFailure = false;
 
     while (Date.now() - sessionStartTime <= TOTAL_SESSION_DURATION_MS) {
       cycleCount++;
-      console.log(`\n>>> [Ping #${cycleCount}] (${new Date().toLocaleTimeString()}) <<<`);
+      const nowStr = new Date().toLocaleTimeString();
+      console.log(`\n>>> [Ping #${cycleCount} at ${nowStr}] <<<`);
       const success = await runPingCycle();
 
       if (!success) {
@@ -211,7 +215,7 @@ async function main() {
       const remaining = TOTAL_SESSION_DURATION_MS - elapsed;
 
       if (remaining >= PING_INTERVAL_MS) {
-        console.log(`\n[Timer] Waiting 5 minutes until next ping... (${Math.round(remaining / 60000)} min remaining in this GitHub Action job)`);
+        console.log(`\n[Timer] Waiting 5 minutes until next ping... (${Math.round(remaining / 60000)} min remaining in this 6-hour GitHub Actions job)`);
         await setTimeout(PING_INTERVAL_MS);
       } else {
         break;
@@ -219,7 +223,7 @@ async function main() {
     }
 
     console.log('\n====================================================');
-    console.log(` JOB SESSION COMPLETE - Pings sent every 5 minutes successfully.`);
+    console.log(` GITHUB JOB SESSION COMPLETE - Executed ${cycleCount} pings across 5.8 hours.`);
     console.log('====================================================');
 
     process.exit(anyFailure ? 1 : 0);
@@ -230,5 +234,3 @@ main().catch((err) => {
   console.error('\n[Unhandled Exception]', err);
   process.exit(1);
 });
-
-console.log('HELLO WORLD');

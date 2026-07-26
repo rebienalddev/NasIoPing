@@ -2,9 +2,8 @@ name: Keep Alive Render Service
 
 on:
   schedule:
-    # Multi-cron schedule ensures GitHub triggers runner containers frequently
-    - cron: '*/10 * * * *'
-    - cron: '5,15,25,35,45,55 * * * *'
+    # Triggers long-running 5.8-hour pinging sessions automatically
+    - cron: '0 0,5,10,15,20 * * *'
   workflow_dispatch:
     # Allows manual triggering from the GitHub Actions tab
 
@@ -15,10 +14,7 @@ jobs:
   ping:
     name: Ping Render Web Service
     runs-on: ubuntu-latest
-    # Ensure clean execution management
-    concurrency:
-      group: render-ping-job
-      cancel-in-progress: false
+    timeout-minutes: 360 # Allow up to 6 hours max execution
 
     steps:
       - name: Checkout repository
@@ -29,7 +25,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Run Ping Script (Active Session)
+      - name: Run 5.8-Hour Active Session (Pings Every 5 Minutes)
         run: node ping.js
 
       - name: Commit and push ping history
