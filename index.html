@@ -3,28 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Render Service Telemetry & Health Dashboard</title>
-  <meta name="description" content="Professional server telemetry and keep-alive request log dashboard formatted in Philippine Standard Time." />
+  <title>NASIOPING // SERVER CONSOLE & TELEMETRY LOGS</title>
+  <meta name="description" content="Black & White Minimalist Terminal Server Console for Render Web Service Keep-Alive Logs." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-surface: #090d16;
-      --panel-bg: #0f172a;
-      --panel-border: #1e293b;
-      --panel-header: #131c31;
-      --text-primary: #f8fafc;
-      --text-secondary: #94a3b8;
-      --text-muted: #64748b;
-      --accent-cyan: #38bdf8;
-      --accent-indigo: #6366f1;
-      --status-green: #10b981;
-      --status-green-bg: rgba(16, 185, 129, 0.12);
-      --status-red: #ef4444;
-      --status-red-bg: rgba(239, 68, 68, 0.12);
-      --radius-sm: 6px;
-      --radius-md: 10px;
+      --bg-black: #000000;
+      --panel-black: #0a0a0a;
+      --panel-header: #121212;
+      --border-gray: #262626;
+      --border-bright: #404040;
+      --text-white: #ffffff;
+      --text-gray: #a1a1aa;
+      --text-dark: #52525b;
+      --status-ok: #ffffff;
+      --status-ok-bg: #171717;
+      --status-err: #ef4444;
     }
 
     * {
@@ -34,27 +30,26 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-surface);
-      color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace;
+      background-color: var(--bg-black);
+      color: var(--text-white);
       min-height: 100vh;
-      padding: 2.5rem 1.5rem;
+      padding: 2rem 1.25rem;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
 
-    .dashboard-layout {
-      max-width: 1140px;
+    .terminal-wrapper {
+      max-width: 1100px;
       margin: 0 auto;
     }
 
-    /* Server Top Console Bar */
-    .server-console-header {
-      background: var(--panel-bg);
-      border: 1px solid var(--panel-border);
-      border-radius: var(--radius-md);
+    /* Terminal Console Bar Header */
+    .console-header {
+      background: var(--panel-black);
+      border: 1px solid var(--border-gray);
       padding: 1.25rem 1.5rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -62,138 +57,114 @@
       gap: 1rem;
     }
 
-    .brand-title-group h1 {
-      font-size: 1.35rem;
+    .brand-group h1 {
+      font-size: 1.15rem;
       font-weight: 700;
-      color: var(--text-primary);
+      letter-spacing: 0.05em;
+      color: var(--text-white);
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      letter-spacing: -0.01em;
+      gap: 0.5rem;
     }
 
-    .server-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      background: rgba(99, 102, 241, 0.15);
-      color: #818cf8;
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      font-weight: 500;
+    .prompt-symbol {
+      color: var(--text-gray);
+      font-weight: 800;
     }
 
-    .server-meta {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      margin-top: 0.2rem;
+    .console-sub {
+      font-size: 0.8rem;
+      color: var(--text-gray);
+      margin-top: 0.35rem;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       gap: 0.75rem;
     }
 
-    .meta-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
     .endpoint-link {
-      color: var(--accent-cyan);
-      text-decoration: none;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.825rem;
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      padding: 0.35rem 0.75rem;
-      border-radius: var(--radius-sm);
-      transition: all 0.15s ease;
+      color: var(--text-white);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 500;
     }
 
     .endpoint-link:hover {
-      background: rgba(56, 189, 248, 0.16);
-      border-color: var(--accent-cyan);
+      color: var(--text-gray);
     }
 
-    .status-indicator {
+    .server-status-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--text-white);
+      background: var(--text-white);
+      color: var(--bg-black);
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      color: var(--status-green);
-      background: var(--status-green-bg);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      padding: 0.35rem 0.75rem;
-      border-radius: 9999px;
-      font-weight: 600;
     }
 
-    .led-dot {
-      width: 7px;
-      height: 7px;
-      background-color: var(--status-green);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--status-green);
-      animation: pulse-led 1.8s infinite;
+    .status-blink {
+      width: 6px;
+      height: 6px;
+      background: var(--bg-black);
+      display: inline-block;
+      animation: blink-dot 1.2s infinite steps(1, start);
     }
 
-    @keyframes pulse-led {
-      0% { opacity: 0.4; }
-      50% { opacity: 1; }
-      100% { opacity: 0.4; }
+    @keyframes blink-dot {
+      50% { opacity: 0; }
     }
 
-    /* Metric Cards Grid */
-    .metrics-grid {
+    /* Metric Grid Boxes */
+    .metrics-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.25rem;
     }
 
-    .metric-card {
-      background: var(--panel-bg);
-      border: 1px solid var(--panel-border);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
+    .metric-box {
+      background: var(--panel-black);
+      border: 1px solid var(--border-gray);
+      padding: 1rem 1.25rem;
     }
 
-    .metric-title {
-      font-size: 0.75rem;
+    .metric-key {
+      font-size: 0.7rem;
       font-weight: 600;
+      color: var(--text-gray);
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.35rem;
     }
 
-    .metric-value {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.75rem;
+    .metric-val {
+      font-size: 1.6rem;
       font-weight: 700;
-      color: var(--text-primary);
+      color: var(--text-white);
+      letter-spacing: -0.02em;
     }
 
-    .metric-sub {
-      font-size: 0.785rem;
-      color: var(--text-secondary);
-      margin-top: 0.3rem;
+    .metric-foot {
+      font-size: 0.725rem;
+      color: var(--text-dark);
+      margin-top: 0.25rem;
     }
 
     /* Telemetry Table Container */
-    .telemetry-card {
-      background: var(--panel-bg);
-      border: 1px solid var(--panel-border);
-      border-radius: var(--radius-md);
+    .table-panel {
+      background: var(--panel-black);
+      border: 1px solid var(--border-gray);
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     }
 
-    .telemetry-header {
+    .panel-bar {
       background: var(--panel-header);
-      padding: 1rem 1.25rem;
-      border-bottom: 1px solid var(--panel-border);
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--border-gray);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -201,80 +172,73 @@
       gap: 0.75rem;
     }
 
-    .telemetry-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    .panel-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text-white);
     }
 
-    .action-controls {
+    .panel-actions {
       display: flex;
       align-items: center;
       gap: 0.75rem;
     }
 
-    .search-input {
-      background: #090d16;
-      border: 1px solid var(--panel-border);
-      color: var(--text-primary);
+    .search-field {
+      background: var(--bg-black);
+      border: 1px solid var(--border-gray);
+      color: var(--text-white);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      padding: 0.4rem 0.8rem;
-      border-radius: var(--radius-sm);
-      width: 210px;
+      font-size: 0.775rem;
+      padding: 0.35rem 0.75rem;
+      width: 200px;
       outline: none;
-      transition: border-color 0.15s ease;
     }
 
-    .search-input:focus {
-      border-color: var(--accent-cyan);
+    .search-field:focus {
+      border-color: var(--text-white);
     }
 
-    .btn-refresh {
-      background: #1e293b;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-primary);
-      padding: 0.4rem 0.85rem;
-      border-radius: var(--radius-sm);
-      font-size: 0.8rem;
-      font-weight: 500;
+    .btn-action {
+      background: var(--bg-black);
+      border: 1px solid var(--border-gray);
+      color: var(--text-white);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.775rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: background 0.15s ease;
+      transition: all 0.15s ease;
     }
 
-    .btn-refresh:hover {
-      background: #334155;
+    .btn-action:hover {
+      background: var(--text-white);
+      color: var(--bg-black);
     }
 
-    /* Fixed Height Scrollable Table Area */
-    .table-scroll-container {
-      max-height: 440px; /* Fixed scrollable container height */
+    /* Scrollable Container (Fixed Height) */
+    .scroll-table-box {
+      max-height: 420px; /* Fixed scrollable container height */
       overflow-y: auto;
       scrollbar-width: thin;
-      scrollbar-color: #334155 #0f172a;
+      scrollbar-color: var(--border-bright) var(--bg-black);
     }
 
-    .table-scroll-container::-webkit-scrollbar {
+    .scroll-table-box::-webkit-scrollbar {
       width: 6px;
     }
 
-    .table-scroll-container::-webkit-scrollbar-track {
-      background: #0f172a;
+    .scroll-table-box::-webkit-scrollbar-track {
+      background: var(--bg-black);
     }
 
-    .table-scroll-container::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 4px;
+    .scroll-table-box::-webkit-scrollbar-thumb {
+      background: var(--border-bright);
     }
 
-    .table-scroll-container::-webkit-scrollbar-thumb:hover {
-      background: #475569;
+    .scroll-table-box::-webkit-scrollbar-thumb:hover {
+      background: var(--text-gray);
     }
 
     table {
@@ -286,158 +250,146 @@
     thead th {
       position: sticky;
       top: 0;
-      z-index: 5;
-      background: #131c31;
-      color: var(--text-muted);
-      font-size: 0.725rem;
-      font-weight: 600;
+      z-index: 10;
+      background: var(--panel-header);
+      color: var(--text-gray);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 0.85rem 1.25rem;
-      border-bottom: 1px solid var(--panel-border);
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--border-gray);
     }
 
     tbody td {
-      padding: 0.85rem 1.25rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-      font-size: 0.85rem;
-      color: var(--text-secondary);
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--border-gray);
+      font-size: 0.8rem;
+      color: var(--text-white);
     }
 
     tbody tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
+      background: #141414;
     }
 
-    .col-idx {
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--text-muted);
+    .cell-id {
+      color: var(--text-gray);
       width: 60px;
     }
 
-    .col-time {
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--text-primary);
+    .cell-time {
+      color: var(--text-white);
     }
 
-    .col-latency {
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--accent-cyan);
+    .cell-latency {
+      color: var(--text-gray);
     }
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 4px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      font-weight: 600;
+    .status-code-pill {
+      display: inline-block;
+      font-size: 0.725rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border: 1px solid var(--border-bright);
+      background: #141414;
+      color: var(--text-white);
     }
 
-    .pill-success {
-      background: var(--status-green-bg);
-      color: var(--status-green);
-      border: 1px solid rgba(16, 185, 129, 0.25);
+    .status-code-pill.err {
+      border-color: var(--status-err);
+      color: var(--status-err);
     }
 
-    .pill-error {
-      background: var(--status-red-bg);
-      color: var(--status-red);
-      border: 1px solid rgba(239, 68, 68, 0.25);
-    }
-
-    .empty-state {
+    .empty-msg {
       padding: 3rem;
       text-align: center;
-      color: var(--text-muted);
-      font-size: 0.875rem;
+      color: var(--text-gray);
+      font-size: 0.85rem;
     }
 
     footer {
+      margin-top: 2rem;
       text-align: center;
-      margin-top: 2.5rem;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dark);
+      border-top: 1px dashed var(--border-gray);
+      padding-top: 1.25rem;
     }
   </style>
 </head>
 <body>
 
-  <div class="dashboard-layout">
-    <!-- Server Console Bar -->
-    <div class="server-console-header">
-      <div class="brand-title-group">
+  <div class="terminal-wrapper">
+    <!-- Server Console Header -->
+    <div class="console-header">
+      <div class="brand-group">
         <h1>
-          <span>Telemetry Control Center</span>
-          <span class="server-tag">SYS-NODE22</span>
+          <span class="prompt-symbol">&gt;_</span>
+          <span>NASIOPING // SERVER TELEMETRY CONSOLE</span>
         </h1>
-        <div class="server-meta">
-          <span class="meta-item">Target: <a href="https://nasiobot.onrender.com/" target="_blank" class="endpoint-link">https://nasiobot.onrender.com/</a></span>
-          <span class="meta-item">&bull; Timezone: <strong>Manila (PST, UTC+8)</strong></span>
+        <div class="console-sub">
+          <span>ENDPOINT: <a href="https://nasiobot.onrender.com/" target="_blank" class="endpoint-link">https://nasiobot.onrender.com/</a></span>
+          <span>| TIMEZONE: <strong>MANILA (PST, UTC+8)</strong></span>
         </div>
       </div>
 
-      <div class="status-indicator">
-        <span class="led-dot"></span>
-        <span>ONLINE & HEALTHY</span>
+      <div class="server-status-pill">
+        <span class="status-blink"></span>
+        <span>[ONLINE]</span>
       </div>
     </div>
 
-    <!-- Metric Cards Grid -->
-    <div class="metrics-grid">
-      <div class="metric-card">
-        <div class="metric-title">Total Executions</div>
-        <div class="metric-value" id="totalPings">-</div>
-        <div class="metric-sub">Pings logged</div>
+    <!-- Metrics Row -->
+    <div class="metrics-row">
+      <div class="metric-box">
+        <div class="metric-key">[TOTAL_EXECUTIONS]</div>
+        <div class="metric-val" id="totalPings">-</div>
+        <div class="metric-foot">Recorded pings</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-title">Service Availability</div>
-        <div class="metric-value" id="uptimeRate" style="color: var(--status-green);">-</div>
-        <div class="metric-sub">HTTP 2xx Success Rate</div>
+      <div class="metric-box">
+        <div class="metric-key">[SERVICE_AVAILABILITY]</div>
+        <div class="metric-val" id="uptimeRate">-</div>
+        <div class="metric-foot">HTTP 2xx Uptime</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-title">Latency Benchmark</div>
-        <div class="metric-value" id="avgResponseTime" style="color: var(--accent-cyan);">-</div>
-        <div class="metric-sub">Average response time</div>
+      <div class="metric-box">
+        <div class="metric-key">[AVG_LATENCY]</div>
+        <div class="metric-val" id="avgResponseTime">-</div>
+        <div class="metric-foot">Response benchmark</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-title">Last Health Check (PST)</div>
-        <div class="metric-value" id="lastPingTime" style="font-size: 1.05rem; padding-top: 0.4rem; font-family: 'Inter', sans-serif;">-</div>
-        <div class="metric-sub" id="lastPingStatus">Status: Synchronizing...</div>
+      <div class="metric-box">
+        <div class="metric-key">[LAST_CHECK_PST]</div>
+        <div class="metric-val" id="lastPingTime" style="font-size: 0.95rem; padding-top: 0.4rem;">-</div>
+        <div class="metric-foot" id="lastPingStatus">Status: Syncing...</div>
       </div>
     </div>
 
-    <!-- Telemetry Table Card -->
-    <div class="telemetry-card">
-      <div class="telemetry-header">
-        <div class="telemetry-title">
-          <span>📋 Request Log Streams (Philippine Standard Time)</span>
+    <!-- Telemetry Table Box -->
+    <div class="table-panel">
+      <div class="panel-bar">
+        <div class="panel-title">
+          <span>[SYS.LOG] // REQUEST HISTORY (PHILIPPINE TIME)</span>
         </div>
-        <div class="action-controls">
-          <input type="text" id="searchInput" class="search-input" placeholder="Filter telemetry..." onkeyup="filterLogs()" />
-          <button class="btn-refresh" id="refreshBtn" onclick="loadPingHistory()">
-            <span>Refresh</span>
-          </button>
+        <div class="panel-actions">
+          <input type="text" id="searchInput" class="search-field" placeholder="Filter log query..." onkeyup="filterLogs()" />
+          <button class="btn-action" id="refreshBtn" onclick="loadPingHistory()">[REFRESH]</button>
         </div>
       </div>
 
-      <!-- Scrollable Table Container -->
-      <div class="table-scroll-container">
+      <!-- Scrollable Container (Does Not Overflow Screen) -->
+      <div class="scroll-table-box">
         <table>
           <thead>
             <tr>
-              <th class="col-idx">#</th>
-              <th>Timestamp (Asia/Manila PST)</th>
-              <th>HTTP Code</th>
-              <th>Latency</th>
-              <th>Result</th>
+              <th class="cell-id">#</th>
+              <th>TIMESTAMP (ASIA/MANILA PST)</th>
+              <th>HTTP STATUS</th>
+              <th>LATENCY</th>
+              <th>RESULT</th>
             </tr>
           </thead>
           <tbody id="logsTableBody">
             <tr>
-              <td colspan="5" class="empty-state">Loading telemetry logs...</td>
+              <td colspan="5" class="empty-msg">Loading telemetry log data...</td>
             </tr>
           </tbody>
         </table>
@@ -445,7 +397,7 @@
     </div>
 
     <footer>
-      <p>Render Keep-Alive Monitor &bull; Automated via GitHub Actions &bull; Node.js 22 Engine</p>
+      <p>NASIOPING SERVER TELEMETRY &bull; AUTOMATED VIA GITHUB ACTIONS &bull; NODE 22 ENGINE</p>
     </footer>
   </div>
 
@@ -464,7 +416,7 @@
           minute: '2-digit',
           second: '2-digit',
           hour12: true
-        }) + ' (PST)';
+        }) + ' PST';
       } catch (err) {
         return isoString;
       }
@@ -482,7 +434,7 @@
 
     async function loadPingHistory() {
       const refreshBtn = document.getElementById('refreshBtn');
-      refreshBtn.textContent = 'Loading...';
+      refreshBtn.textContent = '[LOADING...]';
       
       try {
         const response = await fetch('./pings.json?t=' + Date.now());
@@ -494,7 +446,7 @@
       } catch (err) {
         allPings = fallbackPings;
       } finally {
-        refreshBtn.textContent = 'Refresh';
+        refreshBtn.textContent = '[REFRESH]';
         renderDashboard(allPings);
       }
     }
@@ -508,7 +460,7 @@
       const lastPingStatusEl = document.getElementById('lastPingStatus');
 
       if (!data || data.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="5" class="empty-state">No telemetry data recorded.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="5" class="empty-msg">No telemetry log entries found.</td></tr>';
         return;
       }
 
@@ -524,26 +476,26 @@
 
       totalPingsEl.textContent = total;
       uptimeRateEl.textContent = uptime + '%';
-      avgResponseTimeEl.textContent = avgLatency + ' ms';
+      avgResponseTimeEl.textContent = avgLatency + ' MS';
       
       lastPingTimeEl.textContent = formatPhilippineTime(latest.timestamp);
-      lastPingStatusEl.textContent = `Status: ${latest.success ? '🟢 Active' : '🔴 Failed'} (${latest.responseTimeMs}ms)`;
+      lastPingStatusEl.textContent = `[${latest.success ? 'STATUS_OK' : 'STATUS_ERR'}] (${latest.responseTimeMs}ms)`;
 
       // Render table
       tableBody.innerHTML = sortedData.map((item, idx) => {
         const phTimeStr = formatPhilippineTime(item.timestamp);
         const isSuccess = item.success;
         const statusBadge = isSuccess
-          ? `<span class="pill pill-success">HTTP ${item.status || 200} ${item.statusText || 'OK'}</span>`
-          : `<span class="pill pill-error">HTTP ${item.status || 'ERR'} ${item.statusText || 'FAIL'}</span>`;
+          ? `<span class="status-code-pill">[ ${item.status || 200} ${item.statusText || 'OK'} ]</span>`
+          : `<span class="status-code-pill err">[ ${item.status || 'ERR'} ${item.statusText || 'FAIL'} ]</span>`;
 
         return `
           <tr>
-            <td class="col-idx">${total - idx}</td>
-            <td class="col-time">${phTimeStr}</td>
+            <td class="cell-id">#${String(total - idx).padStart(3, '0')}</td>
+            <td class="cell-time">${phTimeStr}</td>
             <td>${statusBadge}</td>
-            <td class="col-latency">${item.responseTimeMs} ms</td>
-            <td><strong style="color: ${isSuccess ? 'var(--status-green)' : 'var(--status-red)'}">${isSuccess ? 'PASS' : 'FAIL'}</strong></td>
+            <td class="cell-latency">${item.responseTimeMs} ms</td>
+            <td><strong>${isSuccess ? 'PASS' : 'FAIL'}</strong></td>
           </tr>
         `;
       }).join('');
