@@ -35,8 +35,8 @@
       color: var(--text-white);
       min-height: 100vh;
       width: 100%;
-      padding: clamp(0.75rem, 2vw, 1.25rem);
-      line-height: 1.5;
+      padding: clamp(0.5rem, 1.5vw, 1.25rem);
+      line-height: 1.4;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
@@ -47,34 +47,33 @@
       margin: 0 auto;
     }
 
-    /* Terminal Console Bar Header */
+    /* Ultra Compact Terminal Console Bar Header */
     .console-header {
       background: var(--panel-black);
       border: 1px solid var(--border-gray);
-      padding: clamp(0.85rem, 2vw, 1.25rem);
-      margin-bottom: clamp(0.85rem, 2vw, 1.25rem);
+      padding: clamp(0.5rem, 1.2vw, 0.9rem) clamp(0.75rem, 1.5vw, 1.25rem);
+      margin-bottom: clamp(0.6rem, 1.5vw, 1rem);
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 0.85rem;
+      gap: 0.5rem 1rem;
       width: 100%;
     }
 
     .brand-group {
-      flex: 1 1 300px;
+      flex: 1 1 auto;
       min-width: 0;
     }
 
     .brand-group h1 {
-      font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+      font-size: clamp(0.825rem, 2vw, 1.05rem);
       font-weight: 700;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.03em;
       color: var(--text-white);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      word-break: break-word;
+      gap: 0.4rem;
+      line-height: 1.2;
     }
 
     .prompt-symbol {
@@ -84,22 +83,21 @@
     }
 
     .console-sub {
-      font-size: clamp(0.7rem, 1.8vw, 0.775rem);
+      font-size: clamp(0.65rem, 1.4vw, 0.75rem);
       color: var(--text-gray);
-      margin-top: 0.35rem;
+      margin-top: 0.15rem;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 0.5rem 0.75rem;
-      word-break: break-all;
+      gap: 0.25rem 0.6rem;
+      line-height: 1.25;
     }
 
     .endpoint-link {
       color: var(--text-white);
       text-decoration: underline;
-      text-underline-offset: 3px;
+      text-underline-offset: 2px;
       font-weight: 500;
-      word-break: break-all;
     }
 
     .endpoint-link:hover {
@@ -107,22 +105,22 @@
     }
 
     .server-status-pill {
-      font-size: clamp(0.675rem, 1.5vw, 0.75rem);
+      font-size: clamp(0.625rem, 1.3vw, 0.725rem);
       font-weight: 700;
       letter-spacing: 0.05em;
-      padding: 0.35rem 0.75rem;
+      padding: 0.2rem 0.55rem;
       border: 1px solid var(--text-white);
       background: var(--text-white);
       color: var(--bg-black);
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.35rem;
       flex-shrink: 0;
     }
 
     .status-blink {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       background: var(--bg-black);
       display: inline-block;
       border-radius: 50%;
@@ -136,8 +134,8 @@
     /* Full Width Fluid Grid Layout */
     .main-page-grid {
       display: grid;
-      grid-template-columns: minmax(280px, 320px) 1fr;
-      gap: clamp(0.85rem, 2vw, 1.25rem);
+      grid-template-columns: minmax(260px, 310px) 1fr;
+      gap: clamp(0.6rem, 1.5vw, 1rem);
       align-items: start;
       width: 100%;
     }
@@ -148,24 +146,24 @@
       border: 1px solid var(--border-gray);
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      padding: clamp(0.85rem, 2vw, 1.25rem);
+      gap: 0.75rem;
+      padding: clamp(0.75rem, 1.5vw, 1rem);
       width: 100%;
     }
 
     .info-panel-title {
-      font-size: clamp(0.775rem, 1.8vw, 0.825rem);
+      font-size: clamp(0.75rem, 1.6vw, 0.8rem);
       font-weight: 800;
       color: var(--text-white);
       letter-spacing: 0.05em;
-      padding-bottom: 0.6rem;
+      padding-bottom: 0.4rem;
       border-bottom: 1px solid var(--border-gray);
     }
 
     .info-desc-text {
-      font-size: clamp(0.725rem, 1.6vw, 0.775rem);
+      font-size: clamp(0.7rem, 1.5vw, 0.75rem);
       color: var(--text-white);
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
     .info-bullets {
@@ -173,12 +171,12 @@
     }
 
     .info-bullets li {
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.5rem;
       color: var(--text-gray);
-      font-size: clamp(0.7rem, 1.5vw, 0.75rem);
+      font-size: clamp(0.675rem, 1.4vw, 0.725rem);
       position: relative;
-      padding-left: 1rem;
-      line-height: 1.45;
+      padding-left: 0.9rem;
+      line-height: 1.4;
     }
 
     .info-bullets li::before {
@@ -196,24 +194,24 @@
     .side-meta-box {
       background: #121212;
       border: 1px solid var(--border-gray);
-      padding: 0.85rem;
+      padding: 0.65rem 0.75rem;
     }
 
     .spec-header {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 700;
       color: var(--text-gray);
       letter-spacing: 0.06em;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.35rem;
       border-bottom: 1px solid var(--border-gray);
-      padding-bottom: 0.3rem;
+      padding-bottom: 0.2rem;
     }
 
     .spec-row {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 0.35rem;
-      font-size: 0.725rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.685rem;
       gap: 0.5rem;
     }
 
@@ -231,16 +229,16 @@
     .stack-badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.35rem;
-      margin-top: 0.25rem;
+      gap: 0.25rem;
+      margin-top: 0.2rem;
     }
 
     .badge-item {
       border: 1px solid var(--border-bright);
       background: var(--bg-black);
       color: var(--text-white);
-      font-size: 0.675rem;
-      padding: 0.15rem 0.45rem;
+      font-size: 0.65rem;
+      padding: 0.1rem 0.35rem;
       font-weight: 600;
     }
 
@@ -248,7 +246,7 @@
     .right-main-panel {
       display: flex;
       flex-direction: column;
-      gap: clamp(0.85rem, 2vw, 1.25rem);
+      gap: clamp(0.6rem, 1.5vw, 1rem);
       width: 100%;
       min-width: 0;
     }
@@ -256,32 +254,32 @@
     /* Metric Grid Boxes */
     .metrics-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 0.75rem;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.6rem;
       width: 100%;
     }
 
     .metric-box {
       background: var(--panel-black);
       border: 1px solid var(--border-gray);
-      padding: clamp(0.75rem, 1.5vw, 1.15rem);
+      padding: clamp(0.6rem, 1.2vw, 0.85rem);
       min-width: 0;
     }
 
     .metric-key {
-      font-size: clamp(0.6rem, 1.3vw, 0.675rem);
+      font-size: clamp(0.575rem, 1.2vw, 0.65rem);
       font-weight: 600;
       color: var(--text-gray);
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.25rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     .metric-val {
-      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
       font-weight: 700;
       color: var(--text-white);
       letter-spacing: -0.02em;
@@ -289,9 +287,9 @@
     }
 
     .metric-foot {
-      font-size: clamp(0.625rem, 1.2vw, 0.7rem);
+      font-size: clamp(0.6rem, 1.1vw, 0.675rem);
       color: var(--text-dark);
-      margin-top: 0.25rem;
+      margin-top: 0.15rem;
     }
 
     /* Telemetry Table Container */
@@ -304,18 +302,18 @@
 
     .panel-bar {
       background: var(--panel-header);
-      padding: 0.85rem 1.25rem;
+      padding: 0.65rem 1rem;
       border-bottom: 1px solid var(--border-gray);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: 0.5rem;
       width: 100%;
     }
 
     .panel-title {
-      font-size: clamp(0.75rem, 1.6vw, 0.825rem);
+      font-size: clamp(0.7rem, 1.5vw, 0.8rem);
       font-weight: 700;
       letter-spacing: 0.05em;
       color: var(--text-white);
@@ -324,9 +322,8 @@
     .panel-actions {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
       flex-wrap: wrap;
-      width: auto;
     }
 
     .search-field {
@@ -334,9 +331,9 @@
       border: 1px solid var(--border-gray);
       color: var(--text-white);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      padding: 0.35rem 0.75rem;
-      width: 170px;
+      font-size: 0.725rem;
+      padding: 0.25rem 0.6rem;
+      width: 150px;
       outline: none;
     }
 
@@ -349,9 +346,9 @@
       border: 1px solid var(--border-gray);
       color: var(--text-white);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.725rem;
       font-weight: 600;
-      padding: 0.35rem 0.75rem;
+      padding: 0.25rem 0.65rem;
       cursor: pointer;
       transition: all 0.15s ease;
       white-space: nowrap;
@@ -362,9 +359,9 @@
       color: var(--bg-black);
     }
 
-    /* Scrollable Container (Fixed Height + Touch Smoothness) */
+    /* Scrollable Container */
     .scroll-table-box {
-      max-height: clamp(300px, 52vh, 480px);
+      max-height: clamp(280px, 50vh, 440px);
       overflow-y: auto;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -374,8 +371,8 @@
     }
 
     .scroll-table-box::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
     }
 
     .scroll-table-box::-webkit-scrollbar-track {
@@ -394,7 +391,7 @@
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      min-width: 540px; /* Ensures table remains readable on small screens */
+      min-width: 480px;
     }
 
     thead th {
@@ -403,18 +400,18 @@
       z-index: 10;
       background: var(--panel-header);
       color: var(--text-gray);
-      font-size: 0.7rem;
+      font-size: 0.675rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 0.75rem 1rem;
+      padding: 0.6rem 0.85rem;
       border-bottom: 1px solid var(--border-gray);
     }
 
     tbody td {
-      padding: 0.75rem 1rem;
+      padding: 0.6rem 0.85rem;
       border-bottom: 1px solid var(--border-gray);
-      font-size: 0.775rem;
+      font-size: 0.75rem;
       color: var(--text-white);
       white-space: nowrap;
     }
@@ -425,7 +422,7 @@
 
     .cell-id {
       color: var(--text-gray);
-      width: 50px;
+      width: 45px;
     }
 
     .cell-time {
@@ -438,9 +435,9 @@
 
     .status-code-pill {
       display: inline-block;
-      font-size: 0.7rem;
+      font-size: 0.675rem;
       font-weight: 700;
-      padding: 0.15rem 0.45rem;
+      padding: 0.1rem 0.4rem;
       border: 1px solid var(--border-bright);
       background: #141414;
       color: var(--text-white);
@@ -452,23 +449,23 @@
     }
 
     .empty-msg {
-      padding: 3rem 1rem;
+      padding: 2.5rem 1rem;
       text-align: center;
       color: var(--text-gray);
-      font-size: 0.825rem;
+      font-size: 0.8rem;
     }
 
     footer {
-      margin-top: 1.75rem;
+      margin-top: 1.5rem;
       text-align: center;
-      font-size: 0.725rem;
+      font-size: 0.7rem;
       color: var(--text-dark);
       border-top: 1px dashed var(--border-gray);
-      padding-top: 1rem;
+      padding-top: 0.85rem;
       width: 100%;
     }
 
-    /* Responsive Breakpoints */
+    /* Mobile Compact Optimization */
     @media (max-width: 960px) {
       .main-page-grid {
         grid-template-columns: 1fr;
@@ -481,37 +478,36 @@
 
     @media (max-width: 560px) {
       body {
-        padding: 0.5rem;
+        padding: 0.4rem;
       }
 
       .console-header {
-        flex-direction: column;
-        align-items: flex-start;
+        padding: 0.5rem 0.65rem;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .console-sub {
+        font-size: 0.625rem;
+        gap: 0.2rem 0.4rem;
       }
 
       .server-status-pill {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .panel-bar {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .panel-actions {
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .search-field {
-        flex: 1;
-        width: auto;
+        padding: 0.15rem 0.4rem;
+        font-size: 0.625rem;
       }
 
       .metrics-row {
         grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
+        gap: 0.4rem;
+      }
+
+      .metric-box {
+        padding: 0.5rem 0.65rem;
+      }
+
+      .panel-bar {
+        padding: 0.5rem 0.65rem;
       }
     }
   </style>
@@ -519,7 +515,7 @@
 <body>
 
   <div class="terminal-wrapper">
-    <!-- Server Console Header -->
+    <!-- Ultra Compact Server Console Header -->
     <header class="console-header">
       <div class="brand-group">
         <h1>
@@ -528,7 +524,7 @@
         </h1>
         <div class="console-sub">
           <span>ENDPOINT: <a href="https://nasiobot.onrender.com/" target="_blank" class="endpoint-link">https://nasiobot.onrender.com/</a></span>
-          <span>| TIMEZONE: <strong>MANILA (PST, UTC+8)</strong></span>
+          <span>| TZ: <strong>MANILA (PST)</strong></span>
         </div>
       </div>
 
@@ -598,10 +594,10 @@
 
       <!-- Right Column: Metrics & Scrollable Request Log Table -->
       <main class="right-main-panel">
-        <!-- Metrics Row (Responsive 2x2 on Mobile) -->
+        <!-- Metrics Row (Compact 2x2 on Mobile) -->
         <div class="metrics-row">
           <div class="metric-box">
-            <div class="metric-key">[TOTAL_EXECUTIONS]</div>
+            <div class="metric-key">[EXECUTIONS]</div>
             <div class="metric-val" id="totalPings">-</div>
             <div class="metric-foot">Recorded pings</div>
           </div>
@@ -616,8 +612,8 @@
             <div class="metric-foot">Response benchmark</div>
           </div>
           <div class="metric-box">
-            <div class="metric-key">[LAST_CHECK_PST]</div>
-            <div class="metric-val" id="lastPingTime" style="font-size: clamp(0.8rem, 1.8vw, 0.95rem); padding-top: 0.35rem;">-</div>
+            <div class="metric-key">[LAST_CHECK]</div>
+            <div class="metric-val" id="lastPingTime" style="font-size: clamp(0.75rem, 1.6vw, 0.9rem); padding-top: 0.25rem;">-</div>
             <div class="metric-foot" id="lastPingStatus">Status: Syncing...</div>
           </div>
         </div>
@@ -626,7 +622,7 @@
         <section class="table-panel">
           <div class="panel-bar">
             <div class="panel-title">
-              <span>[SYS.LOG] // REQUEST HISTORY (PHILIPPINE TIME)</span>
+              <span>[SYS.LOG] // REQUEST HISTORY (PST)</span>
             </div>
             <div class="panel-actions">
               <input type="text" id="searchInput" class="search-field" placeholder="Filter query..." onkeyup="filterLogs()" />
