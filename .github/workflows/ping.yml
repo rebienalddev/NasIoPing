@@ -1,0 +1,30 @@
+name: Keep Alive Render Service
+
+on:
+  schedule:
+    # Multi-cron schedule ensures GitHub triggers runner containers frequently
+    - cron: '*/10 * * * *'
+    - cron: '5,15,25,35,45,55 * * * *'
+  workflow_dispatch:
+    # Allows manual triggering from the GitHub Actions tab
+
+jobs:
+  ping:
+    name: Ping Render Web Service
+    runs-on: ubuntu-latest
+    # Ensure clean execution management
+    concurrency:
+      group: render-ping-job
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run Ping Script (Active Session)
+        run: node ping.js
