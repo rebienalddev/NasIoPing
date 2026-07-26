@@ -34,14 +34,16 @@
       background-color: var(--bg-black);
       color: var(--text-white);
       min-height: 100vh;
-      padding: 1.75rem 1.25rem;
+      width: 100%;
+      padding: 1rem 1.25rem;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
 
     .terminal-wrapper {
-      max-width: 1240px;
-      margin: 0 auto;
+      width: 100%;
+      max-width: 100%; /* Full screen width - no side margins */
+      margin: 0;
     }
 
     /* Terminal Console Bar Header */
@@ -55,6 +57,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 1rem;
+      width: 100%;
     }
 
     .brand-group h1 {
@@ -118,15 +121,16 @@
       50% { opacity: 0; }
     }
 
-    /* Main Page 2-Column Grid Layout */
+    /* Full Width 2-Column Grid Layout */
     .main-page-grid {
       display: grid;
-      grid-template-columns: 320px 1fr;
+      grid-template-columns: 340px 1fr; /* Left Sidebar 340px, Right panel takes rest of screen */
       gap: 1.25rem;
       align-items: start;
+      width: 100%;
     }
 
-    @media (max-width: 880px) {
+    @media (max-width: 900px) {
       .main-page-grid {
         grid-template-columns: 1fr;
       }
@@ -235,13 +239,15 @@
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
+      width: 100%;
     }
 
     /* Metric Grid Boxes */
     .metrics-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 1rem;
+      width: 100%;
     }
 
     .metric-box {
@@ -260,7 +266,7 @@
     }
 
     .metric-val {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 700;
       color: var(--text-white);
       letter-spacing: -0.02em;
@@ -277,6 +283,7 @@
       background: var(--panel-black);
       border: 1px solid var(--border-gray);
       overflow: hidden;
+      width: 100%;
     }
 
     .panel-bar {
@@ -288,6 +295,7 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 0.75rem;
+      width: 100%;
     }
 
     .panel-title {
@@ -310,7 +318,7 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.775rem;
       padding: 0.35rem 0.75rem;
-      width: 180px;
+      width: 200px;
       outline: none;
     }
 
@@ -337,10 +345,11 @@
 
     /* Scrollable Container (Fixed Height) */
     .scroll-table-box {
-      max-height: 420px;
+      max-height: 450px;
       overflow-y: auto;
       scrollbar-width: thin;
       scrollbar-color: var(--border-bright) var(--bg-black);
+      width: 100%;
     }
 
     .scroll-table-box::-webkit-scrollbar {
@@ -432,6 +441,7 @@
       color: var(--text-dark);
       border-top: 1px dashed var(--border-gray);
       padding-top: 1.25rem;
+      width: 100%;
     }
   </style>
 </head>
@@ -457,7 +467,7 @@
       </div>
     </div>
 
-    <!-- Main Page 2-Column Grid -->
+    <!-- Main Page Full-Width 2-Column Grid -->
     <div class="main-page-grid">
       
       <!-- Left Column: Project Description & Tech Metadata -->
