@@ -5,8 +5,8 @@
  * sending an HTTP GET ping request to `https://nasiobot.onrender.com/`
  * EXACTLY EVERY 5 MINUTES continuously.
  *
- * After EVERY 5-minute ping, it automatically commits and pushes `pings.json`
- * to GitHub using GITHUB_TOKEN authentication so your website updates live!
+ * After EVERY 5-minute ping, it automatically pulls remote updates, commits,
+ * and pushes `pings.json` to GitHub so your website updates live!
  */
 
 import { setTimeout } from 'node:timers/promises';
@@ -64,7 +64,7 @@ function recordPingToHistory(pingRecord) {
     fs.writeFileSync(pingsFilePath, JSON.stringify(history, null, 2), 'utf8');
     console.log(`[History] Logged ping #${history.length} to pings.json`);
 
-    // Sync to GitHub on every 5-min ping
+    // Sync to GitHub on every 5-min ping with pull rebase to prevent push rejections
     if (!IS_SINGLE_SHOT && !IS_LOOP_MODE) {
       try {
         const token = process.env.GITHUB_TOKEN;
@@ -73,8 +73,9 @@ function recordPingToHistory(pingRecord) {
           execSync('git config --global user.email "github-actions[bot]@users.noreply.github.com"');
           execSync('git add pings.json');
           execSync('git commit -m "Auto-log 5-min ping history [skip ci]" || true');
+          execSync('git pull --rebase origin main || true');
           execSync('git push origin main || true');
-          console.log('⚡ [Live Sync] Pushed 5-minute ping to GitHub Pages dashboard!');
+          console.log('⚡ [Live Sync] Successfully pushed 5-minute ping to GitHub Pages dashboard!');
         }
       } catch (gitErr) {
         console.warn('[Live Sync Warning] Git push skipped:', gitErr.message);
