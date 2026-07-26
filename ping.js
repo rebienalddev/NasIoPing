@@ -1,12 +1,12 @@
 /**
- * Render Web Service Keep-Alive Ping Script (Instant Live Log Edition)
+ * Render Web Service Keep-Alive Ping Script (Instant Live Sync Edition)
  * -------------------------------------------------------------------
  * This script runs inside a GitHub Actions runner for ~5.8 hours (350 minutes),
  * sending an HTTP GET ping request to `https://nasiobot.onrender.com/`
  * EXACTLY EVERY 5 MINUTES continuously.
  *
  * After EVERY 5-minute ping, it automatically commits and pushes `pings.json`
- * to GitHub so your live website dashboard updates instantly every 5 minutes!
+ * to GitHub using GITHUB_TOKEN authentication so your website updates live!
  */
 
 import { setTimeout } from 'node:timers/promises';
@@ -64,17 +64,20 @@ function recordPingToHistory(pingRecord) {
     fs.writeFileSync(pingsFilePath, JSON.stringify(history, null, 2), 'utf8');
     console.log(`[History] Logged ping #${history.length} to pings.json`);
 
-    // Instant Git Push on every 5-min ping so live website updates every 5 minutes!
+    // Sync to GitHub on every 5-min ping
     if (!IS_SINGLE_SHOT && !IS_LOOP_MODE) {
       try {
-        execSync('git config --global user.name "github-actions[bot]"');
-        execSync('git config --global user.email "github-actions[bot]@users.noreply.github.com"');
-        execSync('git add pings.json');
-        execSync('git commit -m "Auto-log 5-min ping history [skip ci]" || true');
-        execSync('git push origin main || true');
-        console.log('⚡ [Live Sync] Pushed 5-minute ping to GitHub Pages dashboard!');
+        const token = process.env.GITHUB_TOKEN;
+        if (token) {
+          execSync('git config --global user.name "github-actions[bot]"');
+          execSync('git config --global user.email "github-actions[bot]@users.noreply.github.com"');
+          execSync('git add pings.json');
+          execSync('git commit -m "Auto-log 5-min ping history [skip ci]" || true');
+          execSync('git push origin main || true');
+          console.log('⚡ [Live Sync] Pushed 5-minute ping to GitHub Pages dashboard!');
+        }
       } catch (gitErr) {
-        // Ignore background git push errors if unauthenticated locally
+        console.warn('[Live Sync Warning] Git push skipped:', gitErr.message);
       }
     }
   } catch (err) {
