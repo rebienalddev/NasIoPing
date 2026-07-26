@@ -34,13 +34,13 @@
       background-color: var(--bg-black);
       color: var(--text-white);
       min-height: 100vh;
-      padding: 2rem 1.25rem;
+      padding: 1.75rem 1.25rem;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
 
     .terminal-wrapper {
-      max-width: 1100px;
+      max-width: 1240px;
       margin: 0 auto;
     }
 
@@ -48,7 +48,7 @@
     .console-header {
       background: var(--panel-black);
       border: 1px solid var(--border-gray);
-      padding: 1.25rem 1.5rem;
+      padding: 1.15rem 1.5rem;
       margin-bottom: 1.25rem;
       display: flex;
       flex-wrap: wrap;
@@ -73,7 +73,7 @@
     }
 
     .console-sub {
-      font-size: 0.8rem;
+      font-size: 0.775rem;
       color: var(--text-gray);
       margin-top: 0.35rem;
       display: flex;
@@ -91,29 +91,6 @@
 
     .endpoint-link:hover {
       color: var(--text-gray);
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .btn-help {
-      background: var(--bg-black);
-      border: 1px solid var(--border-gray);
-      color: var(--text-white);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      font-weight: 700;
-      padding: 0.3rem 0.65rem;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .btn-help:hover {
-      background: var(--text-white);
-      color: var(--bg-black);
     }
 
     .server-status-pill {
@@ -141,22 +118,140 @@
       50% { opacity: 0; }
     }
 
+    /* Main Page 2-Column Grid Layout */
+    .main-page-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    @media (max-width: 880px) {
+      .main-page-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Left Sidebar Panel - Project Description & Metadata */
+    .left-info-panel {
+      background: var(--panel-black);
+      border: 1px solid var(--border-gray);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1.25rem;
+    }
+
+    .info-panel-title {
+      font-size: 0.825rem;
+      font-weight: 800;
+      color: var(--text-white);
+      letter-spacing: 0.05em;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border-gray);
+    }
+
+    .info-desc-text {
+      font-size: 0.775rem;
+      color: var(--text-white);
+      line-height: 1.5;
+    }
+
+    .info-bullets {
+      list-style: none;
+    }
+
+    .info-bullets li {
+      margin-bottom: 0.65rem;
+      color: var(--text-gray);
+      font-size: 0.75rem;
+      position: relative;
+      padding-left: 1rem;
+      line-height: 1.45;
+    }
+
+    .info-bullets li::before {
+      content: '>';
+      position: absolute;
+      left: 0;
+      color: var(--text-white);
+      font-weight: 800;
+    }
+
+    .info-bullets strong {
+      color: var(--text-white);
+    }
+
+    .side-meta-box {
+      background: #121212;
+      border: 1px solid var(--border-gray);
+      padding: 0.85rem;
+    }
+
+    .spec-header {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-gray);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-gray);
+      padding-bottom: 0.3rem;
+    }
+
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.35rem;
+      font-size: 0.725rem;
+    }
+
+    .spec-key {
+      color: var(--text-dark);
+    }
+
+    .spec-val {
+      color: var(--text-white);
+      font-weight: 600;
+    }
+
+    .stack-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.25rem;
+    }
+
+    .badge-item {
+      border: 1px solid var(--border-bright);
+      background: var(--bg-black);
+      color: var(--text-white);
+      font-size: 0.675rem;
+      padding: 0.15rem 0.45rem;
+      font-weight: 600;
+    }
+
+    /* Right Main Panel - Metrics & Table */
+    .right-main-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
     /* Metric Grid Boxes */
     .metrics-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 1rem;
-      margin-bottom: 1.25rem;
     }
 
     .metric-box {
       background: var(--panel-black);
       border: 1px solid var(--border-gray);
-      padding: 1rem 1.25rem;
+      padding: 1rem 1.15rem;
     }
 
     .metric-key {
-      font-size: 0.7rem;
+      font-size: 0.675rem;
       font-weight: 600;
       color: var(--text-gray);
       letter-spacing: 0.08em;
@@ -165,14 +260,14 @@
     }
 
     .metric-val {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--text-white);
       letter-spacing: -0.02em;
     }
 
     .metric-foot {
-      font-size: 0.725rem;
+      font-size: 0.7rem;
       color: var(--text-dark);
       margin-top: 0.25rem;
     }
@@ -196,7 +291,7 @@
     }
 
     .panel-title {
-      font-size: 0.85rem;
+      font-size: 0.825rem;
       font-weight: 700;
       letter-spacing: 0.05em;
       color: var(--text-white);
@@ -215,7 +310,7 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.775rem;
       padding: 0.35rem 0.75rem;
-      width: 200px;
+      width: 180px;
       outline: none;
     }
 
@@ -287,7 +382,7 @@
     tbody td {
       padding: 0.75rem 1.25rem;
       border-bottom: 1px solid var(--border-gray);
-      font-size: 0.8rem;
+      font-size: 0.785rem;
       color: var(--text-white);
     }
 
@@ -297,7 +392,7 @@
 
     .cell-id {
       color: var(--text-gray);
-      width: 60px;
+      width: 55px;
     }
 
     .cell-time {
@@ -330,165 +425,6 @@
       font-size: 0.85rem;
     }
 
-    /* Compact 2-Column Terminal Info Modal */
-    .modal-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.88);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      padding: 1.25rem;
-      backdrop-filter: blur(4px);
-    }
-
-    .modal-backdrop.active {
-      display: flex;
-    }
-
-    .modal-card {
-      background: var(--panel-black);
-      border: 1px solid var(--text-white);
-      max-width: 650px;
-      width: 100%;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.12);
-    }
-
-    .modal-head {
-      background: var(--text-white);
-      color: var(--bg-black);
-      padding: 0.6rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 800;
-      font-size: 0.8rem;
-      letter-spacing: 0.05em;
-    }
-
-    .btn-close-modal {
-      background: transparent;
-      border: none;
-      color: var(--bg-black);
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 800;
-      cursor: pointer;
-      font-size: 0.85rem;
-    }
-
-    .modal-grid-container {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 1rem;
-      padding: 1.25rem;
-      font-size: 0.775rem;
-    }
-
-    @media (max-width: 600px) {
-      .modal-grid-container {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .modal-left {
-      border-right: 1px dashed var(--border-gray);
-      padding-right: 1rem;
-    }
-
-    @media (max-width: 600px) {
-      .modal-left {
-        border-right: none;
-        border-bottom: 1px dashed var(--border-gray);
-        padding-right: 0;
-        padding-bottom: 1rem;
-      }
-    }
-
-    .modal-intro-text {
-      color: var(--text-white);
-      margin-bottom: 0.85rem;
-      line-height: 1.5;
-    }
-
-    .info-list-items {
-      list-style: none;
-    }
-
-    .info-list-items li {
-      margin-bottom: 0.6rem;
-      color: var(--text-gray);
-      position: relative;
-      padding-left: 1rem;
-      line-height: 1.45;
-    }
-
-    .info-list-items li::before {
-      content: '>';
-      position: absolute;
-      left: 0;
-      color: var(--text-white);
-      font-weight: 800;
-    }
-
-    .info-list-items strong {
-      color: var(--text-white);
-    }
-
-    .modal-right {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .sys-spec-box {
-      background: #121212;
-      border: 1px solid var(--border-gray);
-      padding: 0.85rem;
-    }
-
-    .spec-header {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--text-gray);
-      letter-spacing: 0.06em;
-      margin-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border-gray);
-      padding-bottom: 0.35rem;
-    }
-
-    .spec-item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.4rem;
-      font-size: 0.725rem;
-    }
-
-    .spec-label {
-      color: var(--text-dark);
-    }
-
-    .spec-value {
-      color: var(--text-white);
-      font-weight: 600;
-    }
-
-    .tech-stack-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      margin-top: 0.25rem;
-    }
-
-    .badge-pill {
-      border: 1px solid var(--border-bright);
-      background: var(--bg-black);
-      color: var(--text-white);
-      font-size: 0.685rem;
-      padding: 0.15rem 0.45rem;
-      font-weight: 600;
-    }
-
     footer {
       margin-top: 2rem;
       text-align: center;
@@ -515,70 +451,130 @@
         </div>
       </div>
 
-      <div class="header-actions">
-        <button class="btn-help" onclick="toggleModal(true)" title="About Nas IO Bot">[ ? ]</button>
-        <div class="server-status-pill">
-          <span class="status-blink"></span>
-          <span>[ONLINE]</span>
-        </div>
+      <div class="server-status-pill">
+        <span class="status-blink"></span>
+        <span>[ONLINE]</span>
       </div>
     </div>
 
-    <!-- Metrics Row -->
-    <div class="metrics-row">
-      <div class="metric-box">
-        <div class="metric-key">[TOTAL_EXECUTIONS]</div>
-        <div class="metric-val" id="totalPings">-</div>
-        <div class="metric-foot">Recorded pings</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-key">[SERVICE_AVAILABILITY]</div>
-        <div class="metric-val" id="uptimeRate">-</div>
-        <div class="metric-foot">HTTP 2xx Uptime</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-key">[AVG_LATENCY]</div>
-        <div class="metric-val" id="avgResponseTime">-</div>
-        <div class="metric-foot">Response benchmark</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-key">[LAST_CHECK_PST]</div>
-        <div class="metric-val" id="lastPingTime" style="font-size: 0.95rem; padding-top: 0.4rem;">-</div>
-        <div class="metric-foot" id="lastPingStatus">Status: Syncing...</div>
-      </div>
-    </div>
+    <!-- Main Page 2-Column Grid -->
+    <div class="main-page-grid">
+      
+      <!-- Left Column: Project Description & Tech Metadata -->
+      <aside class="left-info-panel">
+        <div class="info-panel-title">&gt;_ ABOUT NAS IO BOT</div>
+        
+        <p class="info-desc-text">
+          <strong>Nas IO Bot</strong> is an automated Discord membership verification and subscription enforcement bot integrated with website authentication.
+        </p>
 
-    <!-- Telemetry Table Box -->
-    <div class="table-panel">
-      <div class="panel-bar">
-        <div class="panel-title">
-          <span>[SYS.LOG] // REQUEST HISTORY (PHILIPPINE TIME)</span>
-        </div>
-        <div class="panel-actions">
-          <input type="text" id="searchInput" class="search-field" placeholder="Filter log query..." onkeyup="filterLogs()" />
-          <button class="btn-action" id="refreshBtn" onclick="loadPingHistory()">[REFRESH]</button>
-        </div>
-      </div>
+        <ul class="info-bullets">
+          <li>
+            <strong>Gmail Verification:</strong> Requires users to register their Gmail address on the website before joining the Discord server.
+          </li>
+          <li>
+            <strong>MongoDB Storage:</strong> Saves user profiles, Discord IDs, and registration metadata securely to a <strong>MongoDB Cloud Database</strong>.
+          </li>
+          <li>
+            <strong>Subscription Audit:</strong> Checks website subscription status against active Discord members.
+          </li>
+          <li>
+            <strong>Auto-Kick Enforcement:</strong> Automatically kicks members if they are unsubscribed or if their subscription expires.
+          </li>
+        </ul>
 
-      <!-- Scrollable Container (Does Not Overflow Screen) -->
-      <div class="scroll-table-box">
-        <table>
-          <thead>
-            <tr>
-              <th class="cell-id">#</th>
-              <th>TIMESTAMP (ASIA/MANILA PST)</th>
-              <th>HTTP STATUS</th>
-              <th>LATENCY</th>
-              <th>RESULT</th>
-            </tr>
-          </thead>
-          <tbody id="logsTableBody">
-            <tr>
-              <td colspan="5" class="empty-msg">Loading telemetry log data...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div class="side-meta-box">
+          <div class="spec-header">[SYSTEM_METADATA]</div>
+          <div class="spec-row">
+            <span class="spec-key">RUNTIME:</span>
+            <span class="spec-val">Node.js 22</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">DATABASE:</span>
+            <span class="spec-val">MongoDB Cloud</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">PLATFORM:</span>
+            <span class="spec-val">Discord API</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">HOST:</span>
+            <span class="spec-val">Render Cloud</span>
+          </div>
+        </div>
+
+        <div class="side-meta-box">
+          <div class="spec-header">[TECH_STACK]</div>
+          <div class="stack-badges">
+            <span class="badge-item">Node.js</span>
+            <span class="badge-item">MongoDB</span>
+            <span class="badge-item">Discord.js</span>
+            <span class="badge-item">Express</span>
+            <span class="badge-item">Render</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Column: Metrics & Scrollable Request Log Table -->
+      <main class="right-main-panel">
+        <!-- Metrics Row -->
+        <div class="metrics-row">
+          <div class="metric-box">
+            <div class="metric-key">[TOTAL_EXECUTIONS]</div>
+            <div class="metric-val" id="totalPings">-</div>
+            <div class="metric-foot">Recorded pings</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-key">[AVAILABILITY]</div>
+            <div class="metric-val" id="uptimeRate">-</div>
+            <div class="metric-foot">HTTP 2xx Uptime</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-key">[AVG_LATENCY]</div>
+            <div class="metric-val" id="avgResponseTime">-</div>
+            <div class="metric-foot">Response benchmark</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-key">[LAST_CHECK_PST]</div>
+            <div class="metric-val" id="lastPingTime" style="font-size: 0.9rem; padding-top: 0.4rem;">-</div>
+            <div class="metric-foot" id="lastPingStatus">Status: Syncing...</div>
+          </div>
+        </div>
+
+        <!-- Telemetry Table Box -->
+        <div class="table-panel">
+          <div class="panel-bar">
+            <div class="panel-title">
+              <span>[SYS.LOG] // REQUEST HISTORY (PHILIPPINE TIME)</span>
+            </div>
+            <div class="panel-actions">
+              <input type="text" id="searchInput" class="search-field" placeholder="Filter query..." onkeyup="filterLogs()" />
+              <button class="btn-action" id="refreshBtn" onclick="loadPingHistory()">[REFRESH]</button>
+            </div>
+          </div>
+
+          <!-- Scrollable Container (Does Not Overflow Screen) -->
+          <div class="scroll-table-box">
+            <table>
+              <thead>
+                <tr>
+                  <th class="cell-id">#</th>
+                  <th>TIMESTAMP (ASIA/MANILA PST)</th>
+                  <th>HTTP STATUS</th>
+                  <th>LATENCY</th>
+                  <th>RESULT</th>
+                </tr>
+              </thead>
+              <tbody id="logsTableBody">
+                <tr>
+                  <td colspan="5" class="empty-msg">Loading telemetry log data...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+
     </div>
 
     <footer>
@@ -586,83 +582,7 @@
     </footer>
   </div>
 
-  <!-- Compact 2-Column Terminal Info Modal -->
-  <div class="modal-backdrop" id="infoModal" onclick="if(event.target===this) toggleModal(false)">
-    <div class="modal-card">
-      <div class="modal-head">
-        <span>&gt;_ ABOUT NAS IO BOT [SYSTEM_SPEC]</span>
-        <button class="btn-close-modal" onclick="toggleModal(false)">[ X ]</button>
-      </div>
-      <div class="modal-grid-container">
-        <!-- Description on the Left -->
-        <div class="modal-left">
-          <p class="modal-intro-text">
-            <strong>Nas IO Bot</strong> is an automated Discord membership verification and subscription enforcement bot integrated with website accounts.
-          </p>
-
-          <ul class="info-list-items">
-            <li>
-              <strong>Gmail Registration:</strong> Requires users to register their Gmail address on the website before joining the Discord server.
-            </li>
-            <li>
-              <strong>MongoDB Database:</strong> Saves user profiles and Discord registration states securely to a <strong>MongoDB Cloud Database</strong>.
-            </li>
-            <li>
-              <strong>Subscription Audit:</strong> Checks website subscription status against active Discord members.
-            </li>
-            <li>
-              <strong>Auto-Kick Enforcement:</strong> Automatically kicks members if they are not subscribed or if their subscription expires.
-            </li>
-          </ul>
-        </div>
-
-        <!-- System Details & Tech Stack on the Right -->
-        <div class="modal-right">
-          <div class="sys-spec-box">
-            <div class="spec-header">[SYSTEM_METADATA]</div>
-            <div class="spec-item">
-              <span class="spec-label">RUNTIME:</span>
-              <span class="spec-value">Node.js 22</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-label">DATABASE:</span>
-              <span class="spec-value">MongoDB Cloud</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-label">PLATFORM:</span>
-              <span class="spec-value">Discord API</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-label">HOST:</span>
-              <span class="spec-value">Render Cloud</span>
-            </div>
-          </div>
-
-          <div class="sys-spec-box">
-            <div class="spec-header">[TECH_STACK]</div>
-            <div class="tech-stack-badges">
-              <span class="badge-pill">Node.js</span>
-              <span class="badge-pill">MongoDB</span>
-              <span class="badge-pill">Discord.js</span>
-              <span class="badge-pill">Express</span>
-              <span class="badge-pill">Render</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
-    function toggleModal(show) {
-      const modal = document.getElementById('infoModal');
-      if (show) {
-        modal.classList.add('active');
-      } else {
-        modal.classList.remove('active');
-      }
-    }
-
     // Format ISO timestamp into Philippine Standard Time (Asia/Manila)
     function formatPhilippineTime(isoString) {
       if (!isoString) return '-';
