@@ -1,14 +1,5 @@
 [
   {
-    "id": "ping-1788149235321",
-    "timestamp": "2026-08-31T04:07:15.149Z",
-    "status": 503,
-    "statusText": "Service Unavailable",
-    "responseTimeMs": 172,
-    "success": false,
-    "targetUrl": "https://nasiobot.onrender.com/"
-  },
-  {
     "id": "ping-1788149247096",
     "timestamp": "2026-08-31T04:07:26.968Z",
     "status": 503,
@@ -8996,6 +8987,15 @@
     "status": 200,
     "statusText": "OK",
     "responseTimeMs": 151,
+    "success": true,
+    "targetUrl": "https://nasiobot.onrender.com/"
+  },
+  {
+    "id": "ping-1788321121590",
+    "timestamp": "2026-09-02T03:52:01.239Z",
+    "status": 200,
+    "statusText": "OK",
+    "responseTimeMs": 350,
     "success": true,
     "targetUrl": "https://nasiobot.onrender.com/"
   }
