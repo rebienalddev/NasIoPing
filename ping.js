@@ -15,7 +15,7 @@ import path from 'node:path';
 import { execSync } from 'node:child_process';
 
 // Configuration
-const TARGET_URL = 'https://gambot.onrender.com/';
+const TARGET_URL = 'https://gambot-wgnn.onrender.com';
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 10000; // 10 seconds delay between retries
 
