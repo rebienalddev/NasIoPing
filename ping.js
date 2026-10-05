@@ -1,4 +1,3 @@
-```js
 /**
  * Render Web Service Keep-Alive Ping Script (2-Link Edition)
  * -------------------------------------------------------------------
@@ -425,4 +424,3 @@ main().catch((err) => {
   console.error('\n[Unhandled Exception]', err);
   process.exit(1);
 });
-```
