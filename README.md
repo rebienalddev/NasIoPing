@@ -24,15 +24,18 @@ To ensure your Render web service **NEVER** falls asleep, this project uses an *
 
 ---
 
-## ⚙️ Target Endpoint
+## ⚙️ Target Endpoints
 
-The target URL is set at the top of [`ping.js`](ping.js):
+The target URLs are configured in [`ping.js`](ping.js):
 
 ```javascript
-const TARGET_URL = 'https://nasiobot.onrender.com/';
+const TARGET_URLS = [
+  'https://gambot-wgnn.onrender.com',
+  'https://ipad-pdf.onrender.com'
+];
 ```
 
-To ping a different endpoint, edit `TARGET_URL` in [`ping.js`](ping.js) and push your changes to GitHub.
+To add or modify endpoints, edit `TARGET_URLS` in [`ping.js`](ping.js) and push your changes to GitHub.
 
 ---
 

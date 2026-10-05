@@ -520,10 +520,10 @@
       <div class="brand-group">
         <h1>
           <span class="prompt-symbol">&gt;_</span>
-          <span>NASIO BOT SERVER LOG</span>
+          <span>RENDER KEEP-ALIVE SERVER LOG</span>
         </h1>
         <div class="console-sub">
-          <span>ENDPOINT: <a href="https://nasiobot.onrender.com/" target="_blank" class="endpoint-link">https://nasiobot.onrender.com/</a></span>
+          <span>ENDPOINTS: <a href="https://gambot-wgnn.onrender.com" target="_blank" class="endpoint-link">gambot-wgnn</a> &bull; <a href="https://ipad-pdf.onrender.com" target="_blank" class="endpoint-link">ipad-pdf</a></span>
           <span>| TZ: <strong>MANILA (PST)</strong></span>
         </div>
       </div>
@@ -539,24 +539,21 @@
       
       <!-- Left Column: Project Description & Tech Metadata -->
       <aside class="left-info-panel">
-        <div class="info-panel-title">&gt;_ ABOUT NAS IO BOT</div>
+        <div class="info-panel-title">&gt;_ ACTIVE TARGET SERVICES</div>
         
         <p class="info-desc-text">
-          <strong>Nas IO Bot</strong> is an automated Discord membership verification and subscription enforcement bot integrated with website authentication.
+          Automated keep-alive monitor pinging Render web services to prevent idling and cold starts.
         </p>
 
         <ul class="info-bullets">
           <li>
-            <strong>Gmail Verification:</strong> Requires users to register their Gmail address on the website before joining the Discord server.
+            <strong>GamBot:</strong> Discord bot server deployed at <code>gambot-wgnn.onrender.com</code>.
           </li>
           <li>
-            <strong>MongoDB Storage:</strong> Saves user profiles, Discord IDs, and registration metadata securely to a <strong>MongoDB Cloud Database</strong>.
+            <strong>iPadPDF:</strong> High-definition PDF library and web reader service deployed at <code>ipad-pdf.onrender.com</code>.
           </li>
           <li>
-            <strong>Subscription Audit:</strong> Checks website subscription status against active Discord members.
-          </li>
-          <li>
-            <strong>Auto-Kick Enforcement:</strong> Automatically kicks members if they are unsubscribed or if their subscription expires.
+            <strong>5-Minute Cadence:</strong> Pings each endpoint every 5 minutes to prevent Render free-tier 15-minute inactivity spin-down.
           </li>
         </ul>
 
@@ -567,12 +564,12 @@
             <span class="spec-val">Node.js 22</span>
           </div>
           <div class="spec-row">
-            <span class="spec-key">DATABASE:</span>
-            <span class="spec-val">MongoDB Cloud</span>
+            <span class="spec-key">CADENCE:</span>
+            <span class="spec-val">Every 5 Mins</span>
           </div>
           <div class="spec-row">
-            <span class="spec-key">PLATFORM:</span>
-            <span class="spec-val">Discord API</span>
+            <span class="spec-key">RUNNER:</span>
+            <span class="spec-val">GitHub Actions</span>
           </div>
           <div class="spec-row">
             <span class="spec-key">HOST:</span>
@@ -584,9 +581,8 @@
           <div class="spec-header">[TECH_STACK]</div>
           <div class="stack-badges">
             <span class="badge-item">Node.js</span>
-            <span class="badge-item">MongoDB</span>
-            <span class="badge-item">Discord.js</span>
-            <span class="badge-item">Express</span>
+            <span class="badge-item">GitHub Actions</span>
+            <span class="badge-item">Fetch API</span>
             <span class="badge-item">Render</span>
           </div>
         </div>
@@ -637,6 +633,7 @@
                 <tr>
                   <th class="cell-id">#</th>
                   <th>TIMESTAMP (ASIA/MANILA PST)</th>
+                  <th>TARGET ENDPOINT</th>
                   <th>HTTP STATUS</th>
                   <th>LATENCY</th>
                   <th>RESULT</th>
@@ -644,7 +641,7 @@
               </thead>
               <tbody id="logsTableBody">
                 <tr>
-                  <td colspan="5" class="empty-msg">Loading telemetry log data...</td>
+                  <td colspan="6" class="empty-msg">Loading telemetry log data...</td>
                 </tr>
               </tbody>
             </table>
@@ -655,7 +652,7 @@
     </div>
 
     <footer>
-      <p>NASIOPING SERVER TELEMETRY &bull; AUTOMATED VIA GITHUB ACTIONS &bull; NODE 22 ENGINE</p>
+      <p>RENDER MULTI-SERVICE KEEP-ALIVE TELEMETRY &bull; AUTOMATED VIA GITHUB ACTIONS &bull; NODE 22 ENGINE</p>
     </footer>
   </div>
 
@@ -682,10 +679,10 @@
 
     // Embedded fallback dataset
     const fallbackPings = [
-      { id: '1', timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString(), status: 200, statusText: 'OK', responseTimeMs: 312, success: true },
-      { id: '2', timestamp: new Date(Date.now() - 10 * 60 * 1000).toISOString(), status: 200, statusText: 'OK', responseTimeMs: 245, success: true },
-      { id: '3', timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(), status: 200, statusText: 'OK', responseTimeMs: 793, success: true },
-      { id: '4', timestamp: new Date().toISOString(), status: 200, statusText: 'OK', responseTimeMs: 146, success: true }
+      { id: '1', timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString(), status: 200, statusText: 'OK', responseTimeMs: 312, success: true, targetUrl: 'https://gambot-wgnn.onrender.com' },
+      { id: '2', timestamp: new Date(Date.now() - 10 * 60 * 1000).toISOString(), status: 200, statusText: 'OK', responseTimeMs: 245, success: true, targetUrl: 'https://ipad-pdf.onrender.com' },
+      { id: '3', timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(), status: 200, statusText: 'OK', responseTimeMs: 793, success: true, targetUrl: 'https://gambot-wgnn.onrender.com' },
+      { id: '4', timestamp: new Date().toISOString(), status: 200, statusText: 'OK', responseTimeMs: 146, success: true, targetUrl: 'https://ipad-pdf.onrender.com' }
     ];
 
     let allPings = [];
@@ -718,7 +715,7 @@
       const lastPingStatusEl = document.getElementById('lastPingStatus');
 
       if (!data || data.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="5" class="empty-msg">No telemetry log entries found.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="6" class="empty-msg">No telemetry log entries found.</td></tr>';
         return;
       }
 
@@ -737,7 +734,8 @@
       avgResponseTimeEl.textContent = avgLatency + ' MS';
       
       lastPingTimeEl.textContent = formatPhilippineTime(latest.timestamp);
-      lastPingStatusEl.textContent = `[${latest.success ? 'STATUS_OK' : 'STATUS_ERR'}] (${latest.responseTimeMs}ms)`;
+      const latestTargetClean = (latest.targetUrl || '').replace(/^https?:\/\//, '').replace(/\/$/, '') || 'render';
+      lastPingStatusEl.textContent = `[${latest.success ? 'STATUS_OK' : 'STATUS_ERR'}] ${latestTargetClean} (${latest.responseTimeMs}ms)`;
 
       // Render table
       tableBody.innerHTML = sortedData.map((item, idx) => {
@@ -746,11 +744,13 @@
         const statusBadge = isSuccess
           ? `<span class="status-code-pill">[ ${item.status || 200} ${item.statusText || 'OK'} ]</span>`
           : `<span class="status-code-pill err">[ ${item.status || 'ERR'} ${item.statusText || 'FAIL'} ]</span>`;
+        const targetClean = item.targetUrl ? item.targetUrl.replace(/^https?:\/\//, '').replace(/\/$/, '') : 'default';
 
         return `
           <tr>
             <td class="cell-id">#${String(total - idx).padStart(3, '0')}</td>
             <td class="cell-time">${phTimeStr}</td>
+            <td><a href="${item.targetUrl || '#'}" target="_blank" class="endpoint-link" style="font-size:0.75rem;">${targetClean}</a></td>
             <td>${statusBadge}</td>
             <td class="cell-latency">${item.responseTimeMs} ms</td>
             <td><strong>${isSuccess ? 'PASS' : 'FAIL'}</strong></td>
@@ -763,7 +763,9 @@
       const query = document.getElementById('searchInput').value.toLowerCase();
       const filtered = allPings.filter(p => {
         const phTime = formatPhilippineTime(p.timestamp).toLowerCase();
+        const target = (p.targetUrl || '').toLowerCase();
         return phTime.includes(query) ||
+          target.includes(query) ||
           p.timestamp.toLowerCase().includes(query) ||
           (p.status && p.status.toString().includes(query)) ||
           (p.success ? 'pass' : 'fail').includes(query);
