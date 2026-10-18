@@ -1,14 +1,5 @@
 [
   {
-    "id": "ping-1792263897778-q8wbzp",
-    "timestamp": "2026-10-17T19:04:56.963Z",
-    "status": 200,
-    "statusText": "OK",
-    "responseTimeMs": 815,
-    "success": true,
-    "targetUrl": "https://ipad-pdf.onrender.com"
-  },
-  {
     "id": "ping-1792264199343-au2b0d",
     "timestamp": "2026-10-17T19:09:59.162Z",
     "status": 200,
@@ -8996,6 +8987,15 @@
     "status": 503,
     "statusText": "Service Unavailable",
     "responseTimeMs": 98,
+    "success": false,
+    "targetUrl": "https://ipad-pdf.onrender.com"
+  },
+  {
+    "id": "ping-1792321122154-jbp93u",
+    "timestamp": "2026-10-18T10:58:41.906Z",
+    "status": 503,
+    "statusText": "Service Unavailable",
+    "responseTimeMs": 249,
     "success": false,
     "targetUrl": "https://ipad-pdf.onrender.com"
   }
