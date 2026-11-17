@@ -1,14 +1,5 @@
 [
   {
-    "id": "ping-1794711606172-y8y598",
-    "timestamp": "2026-11-15T03:00:05.930Z",
-    "status": 200,
-    "statusText": "OK",
-    "responseTimeMs": 242,
-    "success": true,
-    "targetUrl": "https://gambot-wgnn.onrender.com"
-  },
-  {
     "id": "ping-1794711610168-dxh7qx",
     "timestamp": "2026-11-15T03:00:09.111Z",
     "status": 200,
@@ -8996,6 +8987,15 @@
     "status": 503,
     "statusText": "Service Unavailable",
     "responseTimeMs": 101,
+    "success": false,
+    "targetUrl": "https://gambot-wgnn.onrender.com"
+  },
+  {
+    "id": "ping-1794877792416-mi7idy",
+    "timestamp": "2026-11-17T01:09:52.207Z",
+    "status": 503,
+    "statusText": "Service Unavailable",
+    "responseTimeMs": 209,
     "success": false,
     "targetUrl": "https://gambot-wgnn.onrender.com"
   }
