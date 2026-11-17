@@ -1,14 +1,5 @@
 [
   {
-    "id": "ping-1794804478089-915khb",
-    "timestamp": "2026-11-16T04:47:56.772Z",
-    "status": 200,
-    "statusText": "OK",
-    "responseTimeMs": 1317,
-    "success": true,
-    "targetUrl": "https://ipad-pdf.onrender.com"
-  },
-  {
     "id": "ping-1794804780582-g5jakt",
     "timestamp": "2026-11-16T04:53:00.369Z",
     "status": 200,
@@ -8996,6 +8987,15 @@
     "status": 503,
     "statusText": "Service Unavailable",
     "responseTimeMs": 272,
+    "success": false,
+    "targetUrl": "https://gambot-wgnn.onrender.com"
+  },
+  {
+    "id": "ping-1794918484071-2eludk",
+    "timestamp": "2026-11-17T12:28:03.915Z",
+    "status": 503,
+    "statusText": "Service Unavailable",
+    "responseTimeMs": 156,
     "success": false,
     "targetUrl": "https://gambot-wgnn.onrender.com"
   }
